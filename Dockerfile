@@ -119,4 +119,7 @@ ADD ./start.sh /start.sh
 RUN chmod 755 /start.sh
 RUN mkdir -p /var/run/sshd
 
+# Create the log file to be able to run tail
+RUN touch /var/log/cron.log
+
 CMD ["/bin/bash", "/start.sh"]
