@@ -1,5 +1,7 @@
 #!/bin/bash
 /usr/bin/mysqld_safe &
-/usr/sbin/apache2ctl -D FOREGROUND
+/usr/sbin/sshd -D &
 /etc/init.d/postfix start
-/usr/sbin/sshd -D
+/etc/init.d/fail2ban start
+/etc/init.d/bind9 start
+/usr/sbin/apache2ctl -D FOREGROUND

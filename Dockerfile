@@ -117,5 +117,8 @@ EXPOSE 21 22 53 80 8080 443 3306
 # ISPCONFIG Initialization and Startup Script
 ADD ./start.sh /start.sh
 RUN chmod 755 /start.sh
+RUN mkdir -p /var/run/sshd
+RUN echo "root:pass"|chpasswd
+RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
 
 CMD ["/bin/bash", "/start.sh"]
