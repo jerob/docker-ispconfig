@@ -8,10 +8,10 @@ MAINTAINER Jeremie Robert version: 0.1
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN echo "--- 1"
-RUN apt-get -y install rsyslog rsyslog-relp logrotate supervisor
+RUN apt-get -y update && apt-get -y upgrade && apt-get -y install rsyslog rsyslog-relp logrotate supervisor
 
 RUN echo "--- 2 Install the SSH server"
-RUN apt-get -y update && apt-get -y upgrade && apt-get -y install ssh openssh-server
+RUN apt-get -y install ssh openssh-server
 
 RUN echo "--- 3 Install a shell text editor"
 RUN apt-get -y install nano vim-nox
@@ -55,7 +55,7 @@ RUN apt-get -y install php5-xcache
 RUN echo "--- 13 Install Mailman"
 RUN echo 'mailman mailman/default_server_language en' | debconf-set-selections
 RUN apt-get -y install mailman
-RUN newlist -q mailman mail@mail.com pass
+# RUN ["/usr/lib/mailman/bin/newlist", "-q", "mailman", "mail@mail.com", "pass"]
 ADD ./etc/aliases /etc/aliases
 RUN newaliases
 RUN service postfix restart
@@ -120,8 +120,10 @@ EXPOSE 21 22 53 80 8080 443
 
 # ISPCONFIG Initialization and Startup Script
 ADD ./start.sh /start.sh
+ADD ./supervisord.conf /etc/supervisor/supervisord.conf
 RUN chmod 755 /start.sh
 RUN mkdir -p /var/run/sshd
+RUN mkdir -p /var/log/supervisor
 
 # Create the log file to be able to run tail
 RUN touch /var/log/cron.log
