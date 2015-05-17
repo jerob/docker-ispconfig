@@ -7,6 +7,9 @@ MAINTAINER Jeremie Robert version: 0.1
 # Let the conatiner know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN echo "--- 1"
+RUN apt-get -y install rsyslog rsyslog-relp logrotate supervisor
+
 RUN echo "--- 2 Install the SSH server"
 RUN apt-get -y update && apt-get -y upgrade && apt-get -y install ssh openssh-server
 
@@ -110,7 +113,8 @@ ADD ./etc/clamav/clamd.conf /etc/clamav/clamd.conf
 
 RUN echo "export TERM=xterm" >> /root/.bashrc
 
-EXPOSE 21 22 53 80 8080 443 3306
+EXPOSE 21 22 53 80 8080 443
+#EXPOSE 3306
 
 # VOLUME ["/var/lib/mysql", "/usr/share/nginx/www"]
 
