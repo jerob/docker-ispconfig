@@ -9,6 +9,9 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN echo "--- 1"
 RUN apt-get -y update && apt-get -y upgrade && apt-get -y install rsyslog rsyslog-relp logrotate supervisor
+RUN touch /var/log/cron.log
+# Create the log file to be able to run tail
+RUN touch /var/log/auth.log
 
 RUN echo "--- 2 Install the SSH server"
 RUN apt-get -y install ssh openssh-server
@@ -34,8 +37,8 @@ RUN echo 'mariadb-server mariadb-server/root_password password pass' | debconf-s
 RUN echo 'mariadb-server mariadb-server/root_password_again password pass' | debconf-set-selections
 RUN apt-get -y install postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd sudo
 ADD ./etc/postfix/master.cf /etc/postfix/master.cf
-# RUN service postfix restart
-# RUN service mysql restart
+RUN service postfix restart
+RUN service mysql restart
 
 RUN echo "--- 9 Install Amavisd-new, SpamAssassin And Clamav"
 RUN apt-get -y install amavisd-new spamassassin clamav clamav-daemon zoo unzip bzip2 arj nomarch lzop cabextract apt-listchanges libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl
@@ -98,12 +101,13 @@ ADD ./etc/apache2/conf-enabled/squirrelmail.conf /etc/apache2/conf-enabled/squir
 ADD ./etc/squirrelmail/config.php /etc/squirrelmail/config.php
 RUN mkdir /var/lib/squirrelmail/tmp
 RUN chown www-data /var/lib/squirrelmail/tmp
+RUN service mysql restart
 
 RUN echo '--- 20 Install ISPConfig 3'
-RUN cd /tmp && wget http://www.ispconfig.org/downloads/ISPConfig-3-stable.tar.gz
+RUN cd /tmp && cd . && wget http://www.ispconfig.org/downloads/ISPConfig-3-stable.tar.gz
 RUN cd /tmp && tar xfz ISPConfig-3-stable.tar.gz
-ADD ./install_ispconfig.txt /tmp/install_ispconfig.txt
-RUN service mysql restart && cat /tmp/install_ispconfig.txt | php -q /tmp/ispconfig3_install/install/install.php
+RUN service mysql restart
+# RUN ["/bin/bash", "-c", "cat /tmp/install_ispconfig.txt | php -q /tmp/ispconfig3_install/install/install.php"]
 # RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 # RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 100M/g" /etc/php5/fpm/php.ini
 # RUN sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 100M/g" /etc/php5/fpm/php.ini
@@ -122,11 +126,12 @@ EXPOSE 21 22 53 80 8080 443
 # ISPCONFIG Initialization and Startup Script
 ADD ./start.sh /start.sh
 ADD ./supervisord.conf /etc/supervisor/supervisord.conf
+ADD ./autoinstall.ini /tmp/ispconfig3_install/install/autoinstall.ini
 RUN chmod 755 /start.sh
 RUN mkdir -p /var/run/sshd
 RUN mkdir -p /var/log/supervisor
-
-# Create the log file to be able to run tail
-RUN touch /var/log/cron.log
+# RUN cp /usr/local/ispconfig/interface/ssl/ispserver.crt /etc/postfix/smtpd.cert
+RUN sed -i "s/^hostname=server1.example.com$/hostname=$HOSTNAME/g" /tmp/ispconfig3_install/install/autoinstall.ini
+RUN service mysql restart && php -q /tmp/ispconfig3_install/install/install.php --autoinstall=/tmp/ispconfig3_install/install/autoinstall.ini
 
 CMD ["/bin/bash", "/start.sh"]
