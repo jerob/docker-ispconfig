@@ -22,6 +22,7 @@ RUN apt-get -y update && apt-get -y upgrade
 
 RUN echo "--- 6 Change The Default Shell"
 RUN echo "dash  dash/sh boolean no" | debconf-set-selections
+RUN dpkg-reconfigure dash
 
 RUN echo "--- 7 Synchronize the System Clock"
 RUN apt-get -y install ntp ntpdate
@@ -33,18 +34,19 @@ RUN echo 'mariadb-server mariadb-server/root_password password pass' | debconf-s
 RUN echo 'mariadb-server mariadb-server/root_password_again password pass' | debconf-set-selections
 RUN apt-get -y install postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd sudo
 ADD ./etc/postfix/master.cf /etc/postfix/master.cf
-RUN service postfix restart
-RUN service mysql restart
+# RUN service postfix restart
+# RUN service mysql restart
 
 RUN echo "--- 9 Install Amavisd-new, SpamAssassin And Clamav"
 RUN apt-get -y install amavisd-new spamassassin clamav clamav-daemon zoo unzip bzip2 arj nomarch lzop cabextract apt-listchanges libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl
+ADD ./etc/clamav/clamd.conf /etc/clamav/clamd.conf
 RUN service spamassassin stop
 RUN systemctl disable spamassassin
 
 RUN echo "--- 10 Install Apache2, PHP5, phpMyAdmin, FCGI, suExec, Pear, And mcrypt"
 RUN apt-get -y install apache2 apache2.2-common apache2-doc apache2-mpm-prefork apache2-utils libexpat1 ssl-cert libapache2-mod-php5 php5 php5-common php5-gd php5-mysql php5-imap phpmyadmin php5-cli php5-cgi libapache2-mod-fcgid apache2-suexec php-pear php-auth php5-mcrypt mcrypt php5-imagick imagemagick libruby libapache2-mod-python php5-curl php5-intl php5-memcache php5-memcached php5-pspell php5-recode php5-sqlite php5-tidy php5-xmlrpc php5-xsl memcached libapache2-mod-passenger
 RUN a2enmod suexec rewrite ssl actions include dav_fs dav auth_digest cgi
-RUN service apache2 restart
+# RUN service apache2 restart
 
 RUN echo "--- 12 XCache and PHP-FPM"
 RUN apt-get -y install php5-xcache
@@ -92,11 +94,10 @@ RUN service fail2ban restart
 
 RUN echo "--- 19 Install squirrelmail"
 RUN apt-get -y install squirrelmail
-RUN ln -s /etc/squirrelmail/apache.conf /etc/apache2/conf-enabled/squirrelmail.conf
-
+ADD ./etc/apache2/conf-enabled/squirrelmail.conf /etc/apache2/conf-enabled/squirrelmail.conf
+ADD ./etc/squirrelmail/config.php /etc/squirrelmail/config.php
 RUN mkdir /var/lib/squirrelmail/tmp
 RUN chown www-data /var/lib/squirrelmail/tmp
-# RUN service apache2 reload
 
 RUN echo '--- 20 Install ISPConfig 3'
 RUN cd /tmp && wget http://www.ispconfig.org/downloads/ISPConfig-3-stable.tar.gz
