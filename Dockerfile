@@ -1,8 +1,6 @@
-# A basic apache server with PHP. To use either add or bind mount content under /var/www
-
 FROM debian:jessie
 
-MAINTAINER Jeremie Robert version: 0.1
+MAINTAINER Jeremie Robert version: 0.2
 
 # Let the conatiner know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
