@@ -1,0 +1,9 @@
+<?php
+$wb["active_txt"] = 'Active';
+$wb["title_txt"] = 'Title';
+$wb["desc_txt"] = 'Description';
+$wb["image_url_txt"] = 'Image Url';
+$wb["link_txt"] = 'Link';
+$wb["sorting_txt"] = 'Sorting';
+$wb["target_txt"] = 'Window Target';
+?>

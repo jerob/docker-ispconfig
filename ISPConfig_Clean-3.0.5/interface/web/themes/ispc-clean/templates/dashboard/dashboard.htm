@@ -1,0 +1,48 @@
+<h1><tmpl_var name="welcome_user"></h1>
+<hr />
+<div class="panel panel_dashboard">
+    <div class="dashboard-info">
+        <tmpl_if name='error'>
+            <div class="systemmonitor-state state-error">
+                <div class="status"></div>
+                <div class="statusMsg">
+                    <tmpl_loop name="error">
+                        {tmpl_var name='error_msg'}
+                    </tmpl_loop>
+                </div>
+            </div>
+        </tmpl_if>
+        <tmpl_if name='warning'>
+            <div class="systemmonitor-state state-warning">
+                <div class="status"></div>
+                <div class="statusMsg">
+                    <tmpl_loop name="warning">
+                        {tmpl_var name='warning_msg'}
+                    </tmpl_loop>
+                </div>
+            </div>
+        </tmpl_if>
+        <tmpl_if name='info'>
+            <div class="systemmonitor-state state-info">
+                <div class="status"></div>
+                <div class="statusMsg">
+                    <tmpl_loop name="info">
+                        {tmpl_var name='info_msg'}
+                    </tmpl_loop>
+                </div>
+            </div>
+        </tmpl_if>
+    </div>
+    <div id="dashboard-left-col">
+        <tmpl_loop name='leftcol'>
+            {tmpl_var name='content'}
+            <p>&nbsp;</p>
+        </tmpl_loop>
+    </div>
+    <div id="dashboard-right-col">
+        <tmpl_loop name='rightcol'>
+            {tmpl_var name='content'}
+            <p>&nbsp;</p>
+        </tmpl_loop>
+    </div>
+</div>

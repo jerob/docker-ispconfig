@@ -1,0 +1,27 @@
+<h2><tmpl_var name="tpl_ispc-clean_head_txt"></h2>
+<p><tmpl_var name="tpl_ispc-clean_desc_txt"></p>
+
+<div class="panel panel_system_config">
+    
+    <div class="pnl_formsarea">
+        <fieldset class="inlineLabels"><legend>Basic Settings</legend>
+            <div class="ctrlHolder">
+                <label for="logo_url"><tmpl_var name='logo_url_txt'></label>
+                <input name="logo_url" id="logo_url" value="{tmpl_var name='logo_url'}" size="50" maxlength="255" type="text" class="textInput" />&nbsp; Size:&nbsp;152x46px
+            </div>
+            <div class="ctrlHolder">
+                <label for="sidebar_state">{tmpl_var name='sidebar_state_txt'}</label>
+                <select class="selectInput" id="sidebar_state" name="sidebar_state">
+                    {tmpl_var name='sidebar_state'}
+                </select>
+            </div>
+        </fieldset>
+
+        <input type="hidden" name="id" value="{tmpl_var name='id'}">
+
+        <div class="buttonHolder buttons">
+            <button class="positive iconstxt icoPositive" type="button" value="{tmpl_var name='btn_save_txt'}" onclick="submitForm('pageForm','admin/tpl_ispc-clean_edit.php');"><span>{tmpl_var name='btn_save_txt'}</span></button>
+            <button class="negative iconstxt icoNegative" type="button" value="{tmpl_var name='btn_cancel_txt'}" onclick="loadContent('admin/server_list.php');"><span>{tmpl_var name='btn_cancel_txt'}</span></button>
+        </div>
+    </div>
+</div>

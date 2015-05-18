@@ -1,0 +1,68 @@
+<h2><tmpl_var name="list_head_txt"></h2>
+
+<div class="panel panel_list_tpl_ispc-clean_app">
+
+  <div class="pnl_toolsarea">
+    <fieldset><legend>{tmpl_var name="toolsarea_head_txt"}</legend>
+      <div class="buttons">
+        <button class="iconstxt icoAdd" type="button" onclick="loadContent('admin/tpl_ispc-clean_app_edit.php');">
+          <span>{tmpl_var name="add_new_record_txt"}</span>
+        </button>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="pnl_listarea">
+    <fieldset><legend><tmpl_var name="list_head_txt"></legend>
+      <table class="list">
+        <thead>
+          <tr>
+            <th class="tbl_col_active" scope="col"><tmpl_var name="active_txt"></th>
+            <th class="tbl_col_title" scope="col"><tmpl_var name="title_txt"></th>
+            <th class="tbl_col_desc" scope="col"><tmpl_var name="desc_txt"></th>
+            <th class="tbl_col_image_url" scope="col"><tmpl_var name="image_url_txt"></th>
+            <th class="tbl_col_link" scope="col"><tmpl_var name="link_txt"></th>
+            <th class="tbl_col_sorting" scope="col"><tmpl_var name="sorting_txt"></th>
+            <th class="tbl_col_buttons" scope="col">&nbsp;</th>
+          </tr>
+          <tr>
+            <td class="tbl_col_active"><select name="search_active" onChange="submitForm('pageForm','admin/tpl_ispc-clean_app_list.php');">{tmpl_var name='search_active'}</select></td>
+            <td class="tbl_col_title"><input type="text" name="search_title" value="{tmpl_var name='search_title'}" /></td>
+            <td class="tbl_col_desc"><input type="text" name="search_desc" value="{tmpl_var name='search_desc'}" /></td>
+            <td class="tbl_col_image_url"><input type="text" name="search_image_url" value="{tmpl_var name='search_image_url'}" /></td>
+            <td class="tbl_col_link"><input type="text" name="search_link" value="{tmpl_var name='search_link'}" /></td>
+            <td class="tbl_col_sorting"><input type="text" name="search_sorting" value="{tmpl_var name='search_sorting'}" /></td>
+            <td class="tbl_col_buttons"><div class="buttons"><button type="button" class="icons16 icoFilter" name="Filter" id="Filter" value="{tmpl_var name="filter_txt"}" onclick="submitForm('pageForm','admin/tpl_ispc-clean_app_list.php');"><span>{tmpl_var name="filter_txt"}</span></button></div></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tmpl_loop name="records">
+          <tr class="tbl_row_<tmpl_if name='__EVEN__'}even<tmpl_else>uneven</tmpl_if>">
+            <td class="tbl_col_active"><a href="#" onclick="loadContent('admin/tpl_ispc-clean_app_edit.php?id={tmpl_var name='id'}');">{tmpl_var name="active"}</a></td>
+            <td class="tbl_col_title"><a href="#" onclick="loadContent('admin/tpl_ispc-clean_app_edit.php?id={tmpl_var name='id'}');">{tmpl_var name="title"}</a></td>
+            <td class="tbl_col_desc"><a href="#" onclick="loadContent('admin/tpl_ispc-clean_app_edit.php?id={tmpl_var name='id'}');">{tmpl_var name="desc"}</a></td>
+            <td class="tbl_col_image_url"><a href="#" onclick="loadContent('admin/tpl_ispc-clean_app_edit.php?id={tmpl_var name='id'}');">{tmpl_var name="image_url"}</a></td>
+            <td class="tbl_col_link"><a href="#" onclick="loadContent('admin/tpl_ispc-clean_app_edit.php?id={tmpl_var name='id'}');">{tmpl_var name="link"}</a></td>
+            <td class="tbl_col_sorting"><a href="#" onclick="loadContent('admin/tpl_ispc-clean_app_edit.php?id={tmpl_var name='id'}');">{tmpl_var name="sorting"}</a></td>
+            <td class="tbl_col_buttons">
+              <div class="buttons icons16">    
+                <a class="button icons16 icoDelete" href="javascript: del_record('admin/tpl_ispc-clean_app_del.php?id={tmpl_var name='id'}&phpsessid={tmpl_var name='phpsessid'}','{tmpl_var name='delete_confirmation'}');"><span>{tmpl_var name='delete_txt'}</span></a>
+              </div>
+            </td>
+          </tr>
+          </tmpl_loop>
+          <tmpl_unless name="records">
+              <tr class="tbl_row_noresults tbl_row_<tmpl_if name='__EVEN__'}even<tmpl_else>uneven</tmpl_if>">
+                  <td colspan="8">{tmpl_var name='globalsearch_noresults_text_txt'}</td>
+              </tr>
+          </tmpl_unless>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td class="tbl_footer tbl_paging" colspan="9"><tmpl_var name="paging"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </fieldset>
+  </div>
+</div>
