@@ -45,7 +45,7 @@ RUN service spamassassin stop
 RUN systemctl disable spamassassin
 
 RUN echo "--- 10 Install Apache2, PHP5, phpMyAdmin, FCGI, suExec, Pear, And mcrypt"
-RUN apt-get -y install apache2 apache2.2-common apache2-doc apache2-mpm-prefork apache2-utils libexpat1 ssl-cert libapache2-mod-php5 php5 php5-common php5-gd php5-mysql php5-imap phpmyadmin php5-cli php5-cgi libapache2-mod-fcgid apache2-suexec php-pear php-auth php5-mcrypt mcrypt php5-imagick imagemagick libruby libapache2-mod-python php5-curl php5-intl php5-memcache php5-memcached php5-pspell php5-recode php5-sqlite php5-tidy php5-xmlrpc php5-xsl memcached libapache2-mod-passenger
+RUN service mysql restart && apt-get -y install apache2 apache2.2-common apache2-doc apache2-mpm-prefork apache2-utils libexpat1 ssl-cert libapache2-mod-php5 php5 php5-common php5-gd php5-mysql php5-imap phpmyadmin php5-cli php5-cgi libapache2-mod-fcgid apache2-suexec php-pear php-auth php5-mcrypt mcrypt php5-imagick imagemagick libruby libapache2-mod-python php5-curl php5-intl php5-memcache php5-memcached php5-pspell php5-recode php5-sqlite php5-tidy php5-xmlrpc php5-xsl memcached libapache2-mod-passenger
 RUN a2enmod suexec rewrite ssl actions include dav_fs dav auth_digest cgi
 # RUN service apache2 restart
 
@@ -131,5 +131,8 @@ RUN mkdir -p /var/log/supervisor
 # RUN cp /usr/local/ispconfig/interface/ssl/ispserver.crt /etc/postfix/smtpd.cert
 RUN sed -i "s/^hostname=server1.example.com$/hostname=$HOSTNAME/g" /tmp/ispconfig3_install/install/autoinstall.ini
 RUN service mysql restart && php -q /tmp/ispconfig3_install/install/install.php --autoinstall=/tmp/ispconfig3_install/install/autoinstall.ini
+ADD ./ISPConfig_Clean-3.0.5 /tmp/ISPConfig_Clean-3.0.5
+RUN cp -r /tmp/ISPConfig_Clean-3.0.5/interface /usr/local/ispconfig/
+RUN service mysql restart && mysql -ppass < /tmp/ISPConfig_Clean-3.0.5/sql/ispc-clean.sql
 
 CMD ["/bin/bash", "/start.sh"]
