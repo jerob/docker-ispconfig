@@ -1,3 +1,6 @@
+
+# Dockerfile for ISPConfig with MariaDB database
+
 FROM debian:jessie
 
 MAINTAINER Jeremie Robert version: 0.2
