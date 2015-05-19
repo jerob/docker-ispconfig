@@ -139,7 +139,7 @@ ADD ./etc/clamav/clamd.conf /etc/clamav/clamd.conf
 
 RUN echo "export TERM=xterm" >> /root/.bashrc
 
-EXPOSE 21 22 53 80 8080 443
+EXPOSE 20 21 22 53 80 8080 443 30000 30001 30002 30003 30004 30005 30006 30007 30008 30009
 # EXPOSE 3306
 
 # VOLUME ["/var/lib/mysql", "/usr/share/nginx/www"]
@@ -159,7 +159,7 @@ ADD ./ISPConfig_Clean-3.0.5 /tmp/ISPConfig_Clean-3.0.5
 RUN cp -r /tmp/ISPConfig_Clean-3.0.5/interface /usr/local/ispconfig/
 RUN service mysql restart && mysql -ppass < /tmp/ISPConfig_Clean-3.0.5/sql/ispc-clean.sql
 
-VOLUME /var/www
-VOLUME /var/mail
+# VOLUME /var/www
+# VOLUME /var/mail
 
 CMD ["/bin/bash", "/start.sh"]
