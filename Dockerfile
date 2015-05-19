@@ -69,7 +69,26 @@ RUN service postfix restart
 RUN ln -s /etc/mailman/apache.conf /etc/apache2/conf-enabled/mailman.conf
 
 RUN echo "--- 14 Install PureFTPd And Quota"
-RUN apt-get -y install pure-ftpd-common pure-ftpd-mysql quota quotatool
+# install package building helpers
+RUN apt-get -y --force-yes install dpkg-dev debhelper openbsd-inetd
+# install dependancies
+RUN apt-get -y build-dep pure-ftpd
+# build from source
+RUN mkdir /tmp/pure-ftpd-mysql/ && \
+    cd /tmp/pure-ftpd-mysql/ && \
+    apt-get source pure-ftpd-mysql && \
+    cd pure-ftpd-* && \
+    sed -i '/^optflags=/ s/$/ --without-capabilities/g' ./debian/rules && \
+    dpkg-buildpackage -b -uc
+# install the new deb files
+RUN dpkg -i /tmp/pure-ftpd-mysql/pure-ftpd-common*.deb
+RUN dpkg -i /tmp/pure-ftpd-mysql/pure-ftpd-mysql*.deb
+# Prevent pure-ftpd upgrading
+RUN apt-mark hold pure-ftpd-common pure-ftpd-mysql
+# setup ftpgroup and ftpuser
+RUN groupadd ftpgroup
+RUN useradd -g ftpgroup -d /dev/null -s /etc ftpuser
+RUN apt-get -y install quota quotatool
 ADD ./etc/default/pure-ftpd-common /etc/default/pure-ftpd-common
 RUN echo 1 > /etc/pure-ftpd/conf/TLS
 RUN mkdir -p /etc/ssl/private/
@@ -139,5 +158,8 @@ RUN service mysql restart && php -q /tmp/ispconfig3_install/install/install.php 
 ADD ./ISPConfig_Clean-3.0.5 /tmp/ISPConfig_Clean-3.0.5
 RUN cp -r /tmp/ISPConfig_Clean-3.0.5/interface /usr/local/ispconfig/
 RUN service mysql restart && mysql -ppass < /tmp/ISPConfig_Clean-3.0.5/sql/ispc-clean.sql
+
+VOLUME /var/www
+VOLUME /var/mail
 
 CMD ["/bin/bash", "/start.sh"]
