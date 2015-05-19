@@ -162,7 +162,6 @@ ADD ./ISPConfig_Clean-3.0.5 /tmp/ISPConfig_Clean-3.0.5
 RUN cp -r /tmp/ISPConfig_Clean-3.0.5/interface /usr/local/ispconfig/
 RUN service mysql restart && mysql -ppass < /tmp/ISPConfig_Clean-3.0.5/sql/ispc-clean.sql
 
-# VOLUME /var/www
-# VOLUME /var/mail
+VOLUME ["/var/www/","/var/mail/","/var/backup/","/var/lib/mysql"]
 
 CMD ["/bin/bash", "/start.sh"]
