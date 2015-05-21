@@ -1,4 +1,18 @@
 #
+#                    ##        .            
+#              ## ## ##       ==            
+#           ## ## ## ##      ===            
+#       /""""""""""""""""\___/ ===        
+#  ~~~ {~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~   
+#       \______ o          __/            
+#         \    \        __/             
+#          \____\______/                
+# 
+#          |          |
+#       __ |  __   __ | _  __   _
+#      /  \| /  \ /   |/  / _\ | 
+#      \__/| \__/ \__ |\_ \__  |
+#
 # Dockerfile for ISPConfig with MariaDB database
 #
 # https://www.howtoforge.com/tutorial/perfect-server-debian-8-jessie-apache-bind-dovecot-ispconfig-3/
