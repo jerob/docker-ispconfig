@@ -150,8 +150,6 @@ RUN echo "export TERM=xterm" >> /root/.bashrc
 EXPOSE 20 21 22 53 80 8080 443 30000 30001 30002 30003 30004 30005 30006 30007 30008 30009
 # EXPOSE 3306
 
-# VOLUME ["/var/lib/mysql", "/usr/share/nginx/www"]
-
 # ISPCONFIG Initialization and Startup Script
 ADD ./start.sh /start.sh
 ADD ./supervisord.conf /etc/supervisor/supervisord.conf
@@ -159,7 +157,6 @@ ADD ./autoinstall.ini /tmp/ispconfig3_install/install/autoinstall.ini
 RUN chmod 755 /start.sh
 RUN mkdir -p /var/run/sshd
 RUN mkdir -p /var/log/supervisor
-# RUN cp /usr/local/ispconfig/interface/ssl/ispserver.crt /etc/postfix/smtpd.cert
 RUN sed -i "s/^hostname=server1.example.com$/hostname=$HOSTNAME/g" /tmp/ispconfig3_install/install/autoinstall.ini
 # RUN mysqladmin -u root password pass
 RUN service mysql restart && php -q /tmp/ispconfig3_install/install/install.php --autoinstall=/tmp/ispconfig3_install/install/autoinstall.ini
