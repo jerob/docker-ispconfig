@@ -1,5 +1,8 @@
-
+#
 # Dockerfile for ISPConfig with MariaDB database
+#
+# https://www.howtoforge.com/tutorial/perfect-server-debian-8-jessie-apache-bind-dovecot-ispconfig-3/
+#
 
 FROM debian:jessie
 
@@ -8,30 +11,30 @@ MAINTAINER Jeremie Robert version: 0.2
 # Let the conatiner know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN echo "--- 1"
+# --- 1 Preliminary
 RUN apt-get -y update && apt-get -y upgrade && apt-get -y install rsyslog rsyslog-relp logrotate supervisor
 RUN touch /var/log/cron.log
 # Create the log file to be able to run tail
 RUN touch /var/log/auth.log
 
-RUN echo "--- 2 Install the SSH server"
+# --- 2 Install the SSH server
 RUN apt-get -y install ssh openssh-server
 
-RUN echo "--- 3 Install a shell text editor"
+# --- 3 Install a shell text editor
 RUN apt-get -y install nano vim-nox
 
-RUN echo "--- 5 Update Your Debian Installation"
+# --- 5 Update Your Debian Installation
 ADD ./etc/apt/sources.list /etc/apt/sources.list
 RUN apt-get -y update && apt-get -y upgrade
 
-RUN echo "--- 6 Change The Default Shell"
+# --- 6 Change The Default Shell
 RUN echo "dash  dash/sh boolean no" | debconf-set-selections
 RUN dpkg-reconfigure dash
 
-RUN echo "--- 7 Synchronize the System Clock"
+# --- 7 Synchronize the System Clock
 RUN apt-get -y install ntp ntpdate
 
-RUN echo "--- 8 Install Postfix, Dovecot, MySQL, phpMyAdmin, rkhunter, binutils"
+# --- 8 Install Postfix, Dovecot, MySQL, phpMyAdmin, rkhunter, binutils
 RUN echo 'mysql-server mysql-server/root_password password pass' | debconf-set-selections
 RUN echo 'mysql-server mysql-server/root_password_again password pass' | debconf-set-selections
 RUN echo 'mariadb-server mariadb-server/root_password password pass' | debconf-set-selections
@@ -41,13 +44,13 @@ ADD ./etc/postfix/master.cf /etc/postfix/master.cf
 RUN service postfix restart
 RUN service mysql restart
 
-RUN echo "--- 9 Install Amavisd-new, SpamAssassin And Clamav"
+# --- 9 Install Amavisd-new, SpamAssassin And Clamav
 RUN apt-get -y install amavisd-new spamassassin clamav clamav-daemon zoo unzip bzip2 arj nomarch lzop cabextract apt-listchanges libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl
 ADD ./etc/clamav/clamd.conf /etc/clamav/clamd.conf
 RUN service spamassassin stop
 RUN systemctl disable spamassassin
 
-RUN echo "--- 10 Install Apache2, PHP5, phpMyAdmin, FCGI, suExec, Pear, And mcrypt"
+# --- 10 Install Apache2, PHP5, phpMyAdmin, FCGI, suExec, Pear, And mcrypt
 RUN echo 'phpmyadmin phpmyadmin/dbconfig-install boolean true' | debconf-set-selections
 # RUN echo 'phpmyadmin phpmyadmin/app-password-confirm password your-app-pwd' | debconf-set-selections
 RUN echo 'phpmyadmin phpmyadmin/mysql/admin-pass password pass' | debconf-set-selections
@@ -56,13 +59,14 @@ RUN echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | deb
 RUN service mysql restart && apt-get -y install apache2 apache2.2-common apache2-doc apache2-mpm-prefork apache2-utils libexpat1 ssl-cert libapache2-mod-php5 php5 php5-common php5-gd php5-mysql php5-imap phpmyadmin php5-cli php5-cgi libapache2-mod-fcgid apache2-suexec php-pear php-auth php5-mcrypt mcrypt php5-imagick imagemagick libruby libapache2-mod-python php5-curl php5-intl php5-memcache php5-memcached php5-pspell php5-recode php5-sqlite php5-tidy php5-xmlrpc php5-xsl memcached libapache2-mod-passenger
 RUN a2enmod suexec rewrite ssl actions include dav_fs dav auth_digest cgi
 
-RUN echo "--- 12 XCache and PHP-FPM"
+# --- 12 XCache and PHP-FPM
 RUN apt-get -y install php5-xcache
+# php5 fpm (non-free)
 # RUN apt-get -y install libapache2-mod-fastcgi php5-fpm
 # RUN a2enmod actions fastcgi alias
 # RUN service apache2 restart
 
-RUN echo "--- 13 Install Mailman"
+# --- 13 Install Mailman
 RUN echo 'mailman mailman/default_server_language en' | debconf-set-selections
 RUN apt-get -y install mailman
 # RUN ["/usr/lib/mailman/bin/newlist", "-q", "mailman", "mail@mail.com", "pass"]
@@ -71,7 +75,8 @@ RUN newaliases
 RUN service postfix restart
 RUN ln -s /etc/mailman/apache.conf /etc/apache2/conf-enabled/mailman.conf
 
-RUN echo "--- 14 Install PureFTPd And Quota"
+# --- 14 Install PureFTPd And Quota
+
 # install package building helpers
 RUN apt-get -y --force-yes install dpkg-dev debhelper openbsd-inetd
 # install dependancies
@@ -99,19 +104,19 @@ RUN mkdir -p /etc/ssl/private/
 # RUN chmod 600 /etc/ssl/private/pure-ftpd.pem
 # RUN service pure-ftpd-mysql restart
 
-RUN echo "--- 15 Install BIND DNS Server"
+# --- 15 Install BIND DNS Server
 RUN apt-get -y install bind9 dnsutils
 
-RUN echo "--- 16 Install Vlogger, Webalizer, And AWStats"
+# --- 16 Install Vlogger, Webalizer, And AWStats
 RUN apt-get -y install vlogger webalizer awstats geoip-database libclass-dbi-mysql-perl
 ADD etc/cron.d/awstats /etc/cron.d/
 
-RUN echo "--- 17 Install Jailkit"
+# --- 17 Install Jailkit
 RUN apt-get -y install build-essential autoconf automake libtool flex bison debhelper binutils
 RUN cd /tmp && wget http://olivier.sessink.nl/jailkit/jailkit-2.17.tar.gz && tar xvfz jailkit-2.17.tar.gz && cd jailkit-2.17 && ./debian/rules binary
 RUN cd /tmp && dpkg -i jailkit_2.17-1_*.deb && rm -rf jailkit-2.17*
 
-RUN echo "--- 18 Install fail2ban"
+# --- 18 Install fail2ban
 RUN apt-get -y install fail2ban
 ADD ./etc/fail2ban/jail.local /etc/fail2ban/jail.local
 ADD ./etc/fail2ban/filter.d/pureftpd.conf /etc/fail2ban/filter.d/pureftpd.conf
@@ -119,7 +124,7 @@ ADD ./etc/fail2ban/filter.d/dovecot-pop3imap.conf /etc/fail2ban/filter.d/dovecot
 RUN echo "ignoreregex =" >> /etc/fail2ban/filter.d/postfix-sasl.conf
 RUN service fail2ban restart
 
-RUN echo "--- 19 Install squirrelmail"
+# --- 19 Install squirrelmail
 RUN apt-get -y install squirrelmail
 ADD ./etc/apache2/conf-enabled/squirrelmail.conf /etc/apache2/conf-enabled/squirrelmail.conf
 ADD ./etc/squirrelmail/config.php /etc/squirrelmail/config.php
@@ -127,7 +132,7 @@ RUN mkdir /var/lib/squirrelmail/tmp
 RUN chown www-data /var/lib/squirrelmail/tmp
 RUN service mysql restart
 
-RUN echo '--- 20 Install ISPConfig 3'
+# --- 20 Install ISPConfig 3
 RUN cd /tmp && cd . && wget http://www.ispconfig.org/downloads/ISPConfig-3-stable.tar.gz
 RUN cd /tmp && tar xfz ISPConfig-3-stable.tar.gz
 RUN service mysql restart
@@ -161,6 +166,8 @@ RUN service mysql restart && php -q /tmp/ispconfig3_install/install/install.php 
 ADD ./ISPConfig_Clean-3.0.5 /tmp/ISPConfig_Clean-3.0.5
 RUN cp -r /tmp/ISPConfig_Clean-3.0.5/interface /usr/local/ispconfig/
 RUN service mysql restart && mysql -ppass < /tmp/ISPConfig_Clean-3.0.5/sql/ispc-clean.sql
+# Directory for dump SQL backup
+RUN mkdir /var/backup/sql
 
 VOLUME ["/var/www/","/var/mail/","/var/backup/","/var/lib/mysql","/etc/"]
 
