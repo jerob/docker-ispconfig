@@ -178,7 +178,7 @@ ADD ./ISPConfig_Clean-3.0.5 /tmp/ISPConfig_Clean-3.0.5
 RUN cp -r /tmp/ISPConfig_Clean-3.0.5/interface /usr/local/ispconfig/
 RUN service mysql restart && mysql -ppass < /tmp/ISPConfig_Clean-3.0.5/sql/ispc-clean.sql
 # Directory for dump SQL backup
-RUN mkdir /var/backup/sql
+RUN mkdir -p /var/backup/sql
 
 VOLUME ["/var/www/","/var/mail/","/var/backup/","/var/lib/mysql","/etc/"]
 
