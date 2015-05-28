@@ -20,9 +20,9 @@
 
 FROM debian:jessie
 
-MAINTAINER Jeremie Robert version: 0.2
+MAINTAINER Jeremie Robert <appydo@gmail.com> version: 0.2
 
-# Let the conatiner know that there is no tty
+# Let the container know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
 
 # --- 1 Preliminary
