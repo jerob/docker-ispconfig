@@ -166,6 +166,7 @@ EXPOSE 20 21 22 53 80 8080 443 30000 30001 30002 30003 30004 30005 30006 30007 3
 # ISPCONFIG Initialization and Startup Script
 ADD ./start.sh /start.sh
 ADD ./supervisord.conf /etc/supervisor/supervisord.conf
+ADD ./etc/cron.daily/backup.sh /etc/cron.daily/backup.sh
 ADD ./autoinstall.ini /tmp/ispconfig3_install/install/autoinstall.ini
 RUN chmod 755 /start.sh
 RUN mkdir -p /var/run/sshd
