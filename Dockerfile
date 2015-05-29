@@ -180,6 +180,6 @@ RUN service mysql restart && mysql -ppass < /tmp/ISPConfig_Clean-3.0.5/sql/ispc-
 # Directory for dump SQL backup
 RUN mkdir -p /var/backup/sql
 
-VOLUME ["/var/www/","/var/mail/","/var/backup/","/var/lib/mysql","/etc/"]
+VOLUME ["/var/www/","/var/mail/","/var/backup/","/var/lib/mysql","/etc/","/usr/local/ispconfig","/var/log/"]
 
 CMD ["/bin/bash", "/start.sh"]
