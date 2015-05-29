@@ -1,5 +1,5 @@
 #!/bin/bash
-if [[ SQL_BACKUP == 1 ]]
+if [ $SQL_BACKUP = 1 ]
 then
 MUSER=root
 MPASS=pass
