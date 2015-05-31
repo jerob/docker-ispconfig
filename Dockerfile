@@ -32,7 +32,7 @@ RUN touch /var/log/cron.log
 RUN touch /var/log/auth.log
 
 # --- 2 Install the SSH server
-RUN apt-get -y install ssh openssh-server
+RUN apt-get -y install ssh openssh-server rsync
 
 # --- 3 Install a shell text editor
 RUN apt-get -y install nano vim-nox
