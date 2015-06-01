@@ -161,7 +161,7 @@ ADD ./etc/clamav/clamd.conf /etc/clamav/clamd.conf
 
 RUN echo "export TERM=xterm" >> /root/.bashrc
 
-EXPOSE 20 21 22 53 80 8080 443 30000 30001 30002 30003 30004 30005 30006 30007 30008 30009 3306
+EXPOSE 20 21 22 53/udp 53/tcp 80 443 953 8080 30000 30001 30002 30003 30004 30005 30006 30007 30008 30009 3306
 
 # ISPCONFIG Initialization and Startup Script
 ADD ./start.sh /start.sh
