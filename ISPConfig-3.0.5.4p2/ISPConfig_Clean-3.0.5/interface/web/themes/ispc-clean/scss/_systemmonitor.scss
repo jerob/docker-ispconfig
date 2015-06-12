@@ -1,0 +1,144 @@
+@import "compass/css3";
+
+/* System Monitor
+-------------------------------------------------------------- */
+
+.systemmonitor-server, .systemmonitor-ve, .systemmonitor-content, .systemmonitor-state {
+  margin: 0 auto;
+  font-family: Consolas, "Lucida Console", "Courier New",monospace;
+  font-size: 0.9em;
+  float: left;
+  width: 98%;
+  @include border-radius ( 10px );
+  overflow: hidden;
+}
+
+.systemmonitor-server:hover, .systemmonitor-vm:hover {
+  background-color: #FFFACD;
+}
+
+.state-no_state, .state-no_state-ve {
+  border: 4px solid #95A19F;
+  background-color: #f8f8ff;
+  padding: 5px;
+}
+
+.state-unknown, .state-unknown-ve {
+  border: 4px solid #30302e;
+  background-color: #cecfc5;
+  padding: 5px;
+}
+
+.state-ok, .state-ok-ve {
+  border: 4px solid #23fb00;
+  background-color: #adffa2;
+  padding: 5px;
+}
+
+.state-info, .state-info-ve {
+  border: 4px solid #183e99;
+  background-color: #d4e2ff;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.state-warning, .state-warning-ve {
+  border: 4px solid #ffa800;
+  background-color: #ffda93;
+  padding: 5px;
+}
+
+.state-critical, .state-critical-ve {
+  border: 4px solid #ff0000;
+  background-color: #ffb9b9;
+  padding: 5px;
+}
+
+.state-error, .state-error-ve {
+  border: 4px solid #ff0000;
+  background-color: #ff7f7f;
+  padding: 5px;
+}
+
+div.icoDevice {
+  float: left;
+  width: 64px;
+  height: 64px;
+  margin: 5px;
+  background: url("../icons/device_sprite.png") no-repeat transparent;
+}
+
+.systemmonitor-server div.icoDevice {
+  background-position: 0 0;
+}
+
+.systemmonitor-ve div.icoDevice {
+  background-position: -64px 0;
+}
+
+.systemmonitor-network div.icoDevice {
+  background-position: -128px 0;
+}
+
+div {
+  &.statusDevice {
+    float: left;
+  }
+  &.statusMsg {
+    float: left;
+    p {
+      float: left;
+      padding: 5px;
+    }
+  }
+}
+
+.systemmonitor-state .status {
+  margin: 5px;
+}
+
+.status {
+  float: right;
+  width: 32px;
+  height: 32px;
+  background: url("../icons/x32_sprite.png") no-repeat transparent;
+}
+
+div.status {
+  float: left !important;
+}
+
+.state-warning .status, .state-warning-ve .status {
+  background-position: 0 -143px;
+}
+
+.state-no_state .status, .state-no_state-ve .status, .state-unknown .status, .state-unknown-ve .status {
+  background-position: 0 -207px;
+}
+
+.state-ok .status, .state-ok-ve .status {
+  background-position: 0 -270px;
+}
+
+.state-info .status, .state-info-ve .status {
+  background-position: 0 -336px;
+}
+
+.state-error .status, .state-error-ve .status {
+  background-position: 0 -400px;
+}
+
+.state-critical .status, .state-critical-ve .status {
+  background-position: 0 -463px;
+}
+
+.codeview {
+  margin: 20px 0;
+  padding: 5px;
+  border: 4px solid #ffcc00;
+  background: #fffaea;
+  font-family: Consolas, "Lucida Console", "Courier New", monospace;
+  font-size: 0.9em;
+  width: 95%;
+  @include border-radius ( 10px );
+}

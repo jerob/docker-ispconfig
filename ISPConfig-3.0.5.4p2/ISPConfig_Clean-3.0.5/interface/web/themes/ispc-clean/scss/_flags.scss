@@ -1,0 +1,273 @@
+@import "compass/css3";
+
+/* Flags
+-------------------------------------------------------------- */
+
+select.withicons option {
+    background-repeat:no-repeat;
+    background-position: 1px;
+    padding-left:24px;
+}	
+div[class^=country-] {
+    background-image: url("../icons/flags_sprite.png");
+    background-repeat: no-repeat;
+    height: 20px;
+    width: 26px;
+}
+li[class^=country-] {
+    background-image: url("../icons/flags_sprite.png");
+    background-repeat: no-repeat;
+    text-indent: 24px;
+}
+li[class^=country-] a.ui-state-hover { background: transparent; }
+div[class^=country-] span {
+    display: none;
+}
+select.flags option {
+    background-image: url("../icons/flags_sprite.png");
+    background-repeat: no-repeat;
+    padding: 1px 0 1px 30px;
+}
+select.flags option[value=EL] {background-position:0 -1475px}
+select.flags option[value=AD], select.flags option[value=ad], .country-AD {background-position:0 -1px}
+select.flags option[value=AE], select.flags option[value=ae], .country-AE {background-position:0 -23px}
+select.flags option[value=AF], select.flags option[value=af], .country-AF {background-position:0 -45px}
+select.flags option[value=AG], select.flags option[value=ag], .country-AG {background-position:0 -67px}
+select.flags option[value=AI], select.flags option[value=ai], .country-AI {background-position:0 -89px}
+select.flags option[value=AL], select.flags option[value=al], .country-AL {background-position:0 -111px}
+select.flags option[value=AM], select.flags option[value=am], .country-AM {background-position:0 -133px}
+select.flags option[value=AN], select.flags option[value=an], .country-AN {background-position:0 -155px}
+select.flags option[value=AO], select.flags option[value=ao], .country-AO {background-position:0 -177px}
+select.flags option[value=AQ], select.flags option[value=aq], .country-AQ {background-position:0 -199px}
+select.flags option[value=AR], select.flags option[value=ar], .country-AR {background-position:0 -221px}
+select.flags option[value=AS], select.flags option[value=as], .country-AS {background-position:0 -243px}
+select.flags option[value=AT], select.flags option[value=at], .country-AT {background-position:0 -265px}
+select.flags option[value=AU], select.flags option[value=au], .country-AU {background-position:0 -287px}
+select.flags option[value=AW], select.flags option[value=aw], .country-AW {background-position:0 -309px}
+select.flags option[value=AX], select.flags option[value=ax], .country-AX {background-position:0 -331px}
+select.flags option[value=AZ], select.flags option[value=az], .country-AZ {background-position:0 -353px}
+select.flags option[value=BA], select.flags option[value=ba], .country-BA {background-position:0 -375px}
+select.flags option[value=BB], select.flags option[value=bb], .country-BB {background-position:0 -397px}
+select.flags option[value=BD], select.flags option[value=bd], .country-BD {background-position:0 -419px}
+select.flags option[value=BE], select.flags option[value=be], .country-BE {background-position:0 -441px}
+select.flags option[value=BF], select.flags option[value=bf], .country-BF {background-position:0 -463px}
+select.flags option[value=BG], select.flags option[value=bg], .country-BG {background-position:0 -485px}
+select.flags option[value=BH], select.flags option[value=bh], .country-BH {background-position:0 -507px}
+select.flags option[value=BI], select.flags option[value=bi], .country-BI {background-position:0 -529px}
+select.flags option[value=BJ], select.flags option[value=bj], .country-BJ {background-position:0 -551px}
+select.flags option[value=BM], select.flags option[value=bm], .country-BM {background-position:0 -573px}
+select.flags option[value=BN], select.flags option[value=bn], .country-BN {background-position:0 -595px}
+select.flags option[value=BO], select.flags option[value=bo], .country-BO {background-position:0 -617px}
+select.flags option[value=BR], select.flags option[value=br], .country-BR {background-position:0 -639px}
+select.flags option[value=BS], select.flags option[value=bs], .country-BS {background-position:0 -661px}
+select.flags option[value=BT], select.flags option[value=bt], .country-BT {background-position:0 -683px}
+select.flags option[value=BV], select.flags option[value=bv], .country-BV {background-position:0 -705px}
+select.flags option[value=BW], select.flags option[value=bw], .country-BW {background-position:0 -727px}
+select.flags option[value=BY], select.flags option[value=by], .country-BY {background-position:0 -749px}
+select.flags option[value=BZ], select.flags option[value=bz], .country-BZ {background-position:0 -771px}
+select.flags option[value=CA], select.flags option[value=ca], .country-CA {background-position:0 -793px}
+select.flags option[value=CC], select.flags option[value=cc], .country-CC {background-position:0 -837px}
+select.flags option[value=CD], select.flags option[value=cd], .country-CD {background-position:0 -859px}
+select.flags option[value=CF], select.flags option[value=cf], .country-CF {background-position:0 -881px}
+select.flags option[value=CG], select.flags option[value=cg], .country-CG {background-position:0 -903px}
+select.flags option[value=CH], select.flags option[value=ch], .country-CH {background-position:0 -925px}
+select.flags option[value=CI], select.flags option[value=ci], .country-CI {background-position:0 -947px}
+select.flags option[value=CK], select.flags option[value=ck], .country-CK {background-position:0 -969px}
+select.flags option[value=CL], select.flags option[value=cl], .country-CL {background-position:0 -991px}
+select.flags option[value=CM], select.flags option[value=cm], .country-CM {background-position:0 -1013px}
+select.flags option[value=CN], select.flags option[value=cn], .country-CN {background-position:0 -1035px}
+select.flags option[value=CO], select.flags option[value=co], .country-CO {background-position:0 -1057px}
+select.flags option[value=CR], select.flags option[value=cr], .country-CR {background-position:0 -1079px}
+select.flags option[value=CS], select.flags option[value=cs], .country-CS {background-position:0 -1101px}
+select.flags option[value=CU], select.flags option[value=cu], .country-CU {background-position:0 -1123px}
+select.flags option[value=CV], select.flags option[value=cv], .country-CV {background-position:0 -1145px}
+select.flags option[value=CX], select.flags option[value=cx], .country-CX {background-position:0 -1167px}
+select.flags option[value=CY], select.flags option[value=cy], .country-CY {background-position:0 -1189px}
+select.flags option[value=CZ], select.flags option[value=cz], .country-CZ {background-position:0 -1211px}
+select.flags option[value=DE], select.flags option[value=de], .country-DE {background-position:0 -1233px}
+select.flags option[value=DJ], select.flags option[value=dj], .country-DJ {background-position:0 -1255px}
+select.flags option[value=DK], select.flags option[value=dk], .country-DK {background-position:0 -1277px}
+select.flags option[value=DM], select.flags option[value=dm], .country-DM {background-position:0 -1299px}
+select.flags option[value=DO], select.flags option[value=do], .country-DO {background-position:0 -1321px}
+select.flags option[value=DZ], select.flags option[value=dz], .country-DZ {background-position:0 -1343px}
+select.flags option[value=EC], select.flags option[value=ec], .country-EC {background-position:0 -1365px}
+select.flags option[value=EE], select.flags option[value=ee], .country-EE {background-position:0 -1387px}
+select.flags option[value=EG], select.flags option[value=eg], .country-EG {background-position:0 -1409px}
+select.flags option[value=EH], select.flags option[value=eh], .country-EH {background-position:0 -1431px}
+select.flags option[value=ER], select.flags option[value=er], .country-ER {background-position:0 -1475px}
+select.flags option[value=ES], select.flags option[value=es], .country-ES {background-position:0 -1497px}
+select.flags option[value=ET], select.flags option[value=ET], select.flags option[value=et], .country-ET {background-position:0 -1519px}
+select.flags option[value=FI], select.flags option[value=fi], .country-FI {background-position:0 -1585px}
+select.flags option[value=FJ], select.flags option[value=fj], .country-FJ {background-position:0 -1607px}
+select.flags option[value=FK], select.flags option[value=fk], .country-FK {background-position:0 -1629px}
+select.flags option[value=FM], select.flags option[value=fm], .country-FM {background-position:0 -1651px}
+select.flags option[value=FO], select.flags option[value=fo], .country-FO {background-position:0 -1673px}
+select.flags option[value=FR], select.flags option[value=fr], .country-FR {background-position:0 -1695px}
+select.flags option[value=GA], select.flags option[value=ga], .country-GA {background-position:0 -1717px}
+select.flags option[value=GB], select.flags option[value=en], select.flags option[value=gb], .country-GB, .country-EN {background-position:0 -1739px}
+select.flags option[value=GD], select.flags option[value=gd], .country-GD {background-position:0 -1761px}
+select.flags option[value=GE], select.flags option[value=ge], .country-GE {background-position:0 -1783px}
+select.flags option[value=GF], select.flags option[value=gf], .country-GF {background-position:0 -1805px}
+select.flags option[value=GH], select.flags option[value=gh], .country-GH {background-position:0 -1827px}
+select.flags option[value=GI], select.flags option[value=gi], .country-GI {background-position:0 -1849px}
+select.flags option[value=GL], select.flags option[value=gl], .country-GL {background-position:0 -1871px}
+select.flags option[value=GM], select.flags option[value=gm], .country-GM {background-position:0 -1893px}
+select.flags option[value=GN], select.flags option[value=gn], .country-GN {background-position:0 -1915px}
+select.flags option[value=GP], select.flags option[value=gp], .country-GP {background-position:0 -1937px}
+select.flags option[value=GQ], select.flags option[value=gq], .country-GQ {background-position:0 -1959px}
+select.flags option[value=GR], select.flags option[value=el], select.flags option[value=gr], .country-GR, .country-EL {background-position:0 -1981px}
+select.flags option[value=GS], select.flags option[value=gs], .country-GS {background-position:0 -2003px}
+select.flags option[value=GT], select.flags option[value=gt], .country-GT {background-position:0 -2025px}
+select.flags option[value=GU], select.flags option[value=gu], .country-GU {background-position:0 -2047px}
+select.flags option[value=GW], select.flags option[value=gw], .country-GW {background-position:0 -2069px}
+select.flags option[value=GY], select.flags option[value=gy], .country-GY {background-position:0 -2091px}
+select.flags option[value=HK], select.flags option[value=hk], .country-HK {background-position:0 -2113px}
+select.flags option[value=HM], select.flags option[value=hm], .country-HM {background-position:0 -2135px}
+select.flags option[value=HN], select.flags option[value=hn], .country-HN {background-position:0 -2157px}
+select.flags option[value=HR], select.flags option[value=hr], .country-HR {background-position:0 -2179px}
+select.flags option[value=HT], select.flags option[value=ht], .country-HT {background-position:0 -2201px}
+select.flags option[value=HU], select.flags option[value=hu], .country-HU {background-position:0 -2223px}
+select.flags option[value=ID], select.flags option[value=id], .country-ID {background-position:0 -2245px}
+select.flags option[value=IE], select.flags option[value=ie], .country-IE {background-position:0 -2267px}
+select.flags option[value=IL], select.flags option[value=il], .country-IL {background-position:0 -2289px}
+select.flags option[value=IN], select.flags option[value=in], .country-IN {background-position:0 -2311px}
+select.flags option[value=IO], select.flags option[value=io], .country-IO {background-position:0 -2333px}
+select.flags option[value=IQ], select.flags option[value=iq], .country-IQ {background-position:0 -2355px}
+select.flags option[value=IR], select.flags option[value=ir], .country-IR {background-position:0 -2377px}
+select.flags option[value=IS], select.flags option[value=is], .country-IS {background-position:0 -2399px}
+select.flags option[value=IT], select.flags option[value=it], .country-IT {background-position:0 -2421px}
+select.flags option[value=JM], select.flags option[value=jm], .country-JM {background-position:0 -2443px}
+select.flags option[value=JO], select.flags option[value=jo], .country-JO {background-position:0 -2465px}
+select.flags option[value=JP], select.flags option[value=ja], select.flags option[value=jp], .country-JP, .country-JA {background-position:0 -2487px}
+select.flags option[value=KE], select.flags option[value=ke], .country-KE {background-position:0 -2509px}
+select.flags option[value=KG], select.flags option[value=kg], .country-KG {background-position:0 -2531px}
+select.flags option[value=KH], select.flags option[value=kh], .country-KH {background-position:0 -2553px}
+select.flags option[value=KI], select.flags option[value=ki], .country-KI {background-position:0 -2575px}
+select.flags option[value=KM], select.flags option[value=km], .country-KM {background-position:0 -2597px}
+select.flags option[value=KN], select.flags option[value=kn], .country-KN {background-position:0 -2619px}
+select.flags option[value=KP], select.flags option[value=kp], .country-KP {background-position:0 -2641px}
+select.flags option[value=KR], select.flags option[value=kr], .country-KR {background-position:0 -2663px}
+select.flags option[value=KW], select.flags option[value=kw], .country-KW {background-position:0 -2685px}
+select.flags option[value=KY], select.flags option[value=ky], .country-KY {background-position:0 -2707px}
+select.flags option[value=KZ], select.flags option[value=kz], .country-KZ {background-position:0 -2729px}
+select.flags option[value=LA], select.flags option[value=la], .country-LA {background-position:0 -2751px}
+select.flags option[value=LB], select.flags option[value=lb], .country-LB {background-position:0 -2773px}
+select.flags option[value=LC], select.flags option[value=lc], .country-LC {background-position:0 -2795px}
+select.flags option[value=LI], select.flags option[value=li], .country-LI {background-position:0 -2817px}
+select.flags option[value=LK], select.flags option[value=lk], .country-LK {background-position:0 -2839px}
+select.flags option[value=LR], select.flags option[value=lr], .country-LR {background-position:0 -2861px}
+select.flags option[value=LS], select.flags option[value=ls], .country-LS {background-position:0 -2883px}
+select.flags option[value=LT], select.flags option[value=lt], .country-LT {background-position:0 -2905px}
+select.flags option[value=LU], select.flags option[value=lu], .country-LU {background-position:0 -2927px}
+select.flags option[value=LV], select.flags option[value=lv], .country-LV {background-position:0 -2949px}
+select.flags option[value=LY], select.flags option[value=ly], .country-LY {background-position:0 -2971px}
+select.flags option[value=MA], select.flags option[value=ma], .country-MA {background-position:0 -2993px}
+select.flags option[value=MC], select.flags option[value=mc], .country-MC {background-position:0 -3015px}
+select.flags option[value=MD], select.flags option[value=md], .country-MD {background-position:0 -3037px}
+select.flags option[value=ME], select.flags option[value=me], .country-ME {background-position:0 -3059px}
+select.flags option[value=MG], select.flags option[value=mg], .country-MG {background-position:0 -3081px}
+select.flags option[value=MH], select.flags option[value=mh], .country-MH {background-position:0 -3103px}
+select.flags option[value=MK], select.flags option[value=mk], .country-MK {background-position:0 -3125px}
+select.flags option[value=ML], select.flags option[value=ml], .country-ML {background-position:0 -3147px}
+select.flags option[value=MM], select.flags option[value=mm], .country-MM {background-position:0 -3169px}
+select.flags option[value=MN], select.flags option[value=mn], .country-MN {background-position:0 -3191px}
+select.flags option[value=MO], select.flags option[value=mo], .country-MO {background-position:0 -3213px}
+select.flags option[value=MP], select.flags option[value=mp], .country-MP {background-position:0 -3235px}
+select.flags option[value=MQ], select.flags option[value=mq], .country-MQ {background-position:0 -3257px}
+select.flags option[value=MR], select.flags option[value=mr], .country-MR {background-position:0 -3279px}
+select.flags option[value=MS], select.flags option[value=ms], .country-MS {background-position:0 -3301px}
+select.flags option[value=MT], select.flags option[value=mt], .country-MT {background-position:0 -3323px}
+select.flags option[value=MU], select.flags option[value=mu], .country-MU {background-position:0 -3345px}
+select.flags option[value=MV], select.flags option[value=mv], .country-MV {background-position:0 -3367px}
+select.flags option[value=MW], select.flags option[value=mw], .country-MW {background-position:0 -3389px}
+select.flags option[value=MX], select.flags option[value=mx], .country-MX {background-position:0 -3411px}
+select.flags option[value=MY], select.flags option[value=my], .country-MY {background-position:0 -3433px}
+select.flags option[value=MZ], select.flags option[value=mz], .country-MZ {background-position:0 -3455px}
+select.flags option[value=NA], select.flags option[value=na], .country-NA {background-position:0 -3477px}
+select.flags option[value=NC], select.flags option[value=nc], .country-NC {background-position:0 -3499px}
+select.flags option[value=NE], select.flags option[value=ne], .country-NE {background-position:0 -3521px}
+select.flags option[value=NF], select.flags option[value=nf], .country-NF {background-position:0 -3543px}
+select.flags option[value=NG], select.flags option[value=ng], .country-NG {background-position:0 -3565px}
+select.flags option[value=NI], select.flags option[value=ni], .country-NI {background-position:0 -3587px}
+select.flags option[value=NL], select.flags option[value=nl], .country-NL {background-position:0 -3609px}
+select.flags option[value=NO], select.flags option[value=no], .country-NO {background-position:0 -3631px}
+select.flags option[value=NP], select.flags option[value=np], .country-NP {background-position:0 -3653px}
+select.flags option[value=NR], select.flags option[value=nr], .country-NR {background-position:0 -3675px}
+select.flags option[value=NU], select.flags option[value=nu], .country-NU {background-position:0 -3697px}
+select.flags option[value=NZ], select.flags option[value=nz], .country-NZ {background-position:0 -3719px}
+select.flags option[value=OM], select.flags option[value=om], .country-OM {background-position:0 -3741px}
+select.flags option[value=PA], select.flags option[value=pa], .country-PA {background-position:0 -3763px}
+select.flags option[value=PE], select.flags option[value=pe], .country-PE {background-position:0 -3785px}
+select.flags option[value=PF], select.flags option[value=pf], .country-PF {background-position:0 -3807px}
+select.flags option[value=PG], select.flags option[value=pg], .country-PG {background-position:0 -3829px}
+select.flags option[value=PH], select.flags option[value=ph], .country-PH {background-position:0 -3851px}
+select.flags option[value=PK], select.flags option[value=pk], .country-PK {background-position:0 -3873px}
+select.flags option[value=PL], select.flags option[value=pl], .country-PL {background-position:0 -3895px}
+select.flags option[value=PM], select.flags option[value=pm], .country-PM {background-position:0 -3917px}
+select.flags option[value=PN], select.flags option[value=pn], .country-PN {background-position:0 -3939px}
+select.flags option[value=PR], select.flags option[value=pr], .country-PR {background-position:0 -3961px}
+select.flags option[value=PS], select.flags option[value=ps], .country-PS {background-position:0 -3983px}
+select.flags option[value=PT], select.flags option[value=pt], .country-PT {background-position:0 -4005px}
+select.flags option[value=PW], select.flags option[value=pw], .country-PW {background-position:0 -4027px}
+select.flags option[value=PY], select.flags option[value=py], .country-PY {background-position:0 -4049px}
+select.flags option[value=QA], select.flags option[value=qa], .country-QA {background-position:0 -4071px}
+select.flags option[value=RE], select.flags option[value=re], .country-RE {background-position:0 -4093px}
+select.flags option[value=RO], select.flags option[value=ro], .country-RO {background-position:0 -4115px}
+select.flags option[value=RS], select.flags option[value=rs], .country-RS {background-position:0 -4137px}
+select.flags option[value=RU], select.flags option[value=ru], .country-RU {background-position:0 -4159px}
+select.flags option[value=RW], select.flags option[value=rw], .country-RW {background-position:0 -4181px}
+select.flags option[value=SA], select.flags option[value=sa], .country-SA {background-position:0 -4203px}
+select.flags option[value=SB], select.flags option[value=sb], .country-SB {background-position:0 -4225px}
+select.flags option[value=SC], select.flags option[value=sc], .country-SC {background-position:0 -4247px}
+select.flags option[value=SD], select.flags option[value=sd], .country-SD {background-position:0 -4291px}
+select.flags option[value=SE], select.flags option[value=se], .country-SE {background-position:0 -4313px}
+select.flags option[value=SG], select.flags option[value=sg], .country-SG {background-position:0 -4335px}
+select.flags option[value=SH], select.flags option[value=sh], .country-SH {background-position:0 -4357px}
+select.flags option[value=SI], select.flags option[value=si], .country-SI {background-position:0 -4379px}
+select.flags option[value=SJ], select.flags option[value=sj], .country-SJ {background-position:0 -4401px}
+select.flags option[value=SK], select.flags option[value=sk], .country-SK {background-position:0 -4423px}
+select.flags option[value=SL], select.flags option[value=sl], .country-SL {background-position:0 -4445px}
+select.flags option[value=SM], select.flags option[value=sm], .country-SM {background-position:0 -4467px}
+select.flags option[value=SN], select.flags option[value=sn], .country-SN {background-position:0 -4489px}
+select.flags option[value=SO], select.flags option[value=so], .country-SO {background-position:0 -4511px}
+select.flags option[value=SR], select.flags option[value=sr], .country-SR {background-position:0 -4533px}
+select.flags option[value=ST], select.flags option[value=st], .country-ST {background-position:0 -4555px}
+select.flags option[value=SV], select.flags option[value=sv], .country-SV {background-position:0 -4577px}
+select.flags option[value=SY], select.flags option[value=sy], .country-SY {background-position:0 -4599px}
+select.flags option[value=SZ], select.flags option[value=sz], .country-SZ {background-position:0 -4621px}
+select.flags option[value=TC], select.flags option[value=tc], .country-TC {background-position:0 -4643px}
+select.flags option[value=TD], select.flags option[value=td], .country-TD {background-position:0 -4665px}
+select.flags option[value=TF], select.flags option[value=tf], .country-TF {background-position:0 -4687px}
+select.flags option[value=TG], select.flags option[value=tg], .country-TG {background-position:0 -4709px}
+select.flags option[value=TH], select.flags option[value=th], .country-TH {background-position:0 -4731px}
+select.flags option[value=TJ], select.flags option[value=tj], .country-TJ {background-position:0 -4753px}
+select.flags option[value=TK], select.flags option[value=tk], .country-TK {background-position:0 -4775px}
+select.flags option[value=TL], select.flags option[value=tl], .country-TL {background-position:0 -4797px}
+select.flags option[value=TM], select.flags option[value=tm], .country-TM {background-position:0 -4819px}
+select.flags option[value=TN], select.flags option[value=tn], .country-TN {background-position:0 -4841px}
+select.flags option[value=TO], select.flags option[value=to], .country-TO {background-position:0 -4863px}
+select.flags option[value=TR], select.flags option[value=tr], .country-TR {background-position:0 -4885px}
+select.flags option[value=TT], select.flags option[value=tt], .country-TT {background-position:0 -4907px}
+select.flags option[value=TV], select.flags option[value=tv], .country-TV {background-position:0 -4929px}
+select.flags option[value=TW], select.flags option[value=tw], .country-TW {background-position:0 -4951px}
+select.flags option[value=TZ], select.flags option[value=tz], .country-TZ {background-position:0 -4973px}
+select.flags option[value=UA], select.flags option[value=ua], .country-UA {background-position:0 -4995px}
+select.flags option[value=UG], select.flags option[value=ug], .country-UG {background-position:0 -5017px}
+select.flags option[value=UM], select.flags option[value=um], .country-UM {background-position:0 -5039px}
+select.flags option[value=US], select.flags option[value=us], .country-US {background-position:0 -5061px}
+select.flags option[value=UY], select.flags option[value=uy], .country-UY {background-position:0 -5083px}
+select.flags option[value=UZ], select.flags option[value=uz], .country-UZ {background-position:0 -5105px}
+select.flags option[value=VA], select.flags option[value=va], .country-VA {background-position:0 -5127px}
+select.flags option[value=VC], select.flags option[value=vc], .country-VC {background-position:0 -5149px}
+select.flags option[value=VE], select.flags option[value=ve], .country-VE {background-position:0 -5171px}
+select.flags option[value=VG], select.flags option[value=vg], .country-VG {background-position:0 -5193px}
+select.flags option[value=VI], select.flags option[value=vi], .country-VI {background-position:0 -5215px}
+select.flags option[value=VN], select.flags option[value=vn], .country-VN {background-position:0 -5237px}
+select.flags option[value=VU], select.flags option[value=vu], .country-VU {background-position:0 -5259px}
+select.flags option[value=WF], select.flags option[value=wf], .country-WF {background-position:0 -5303px}
+select.flags option[value=WS], select.flags option[value=ws], .country-WS {background-position:0 -5325px}
+select.flags option[value=YE], select.flags option[value=ye], .country-YE {background-position:0 -5347px}
+select.flags option[value=YT], select.flags option[value=yt], .country-YT {background-position:0 -5369px}
+select.flags option[value=ZA], select.flags option[value=za], .country-ZA {background-position:0 -5391px}
+select.flags option[value=ZM], select.flags option[value=zm], .country-ZM {background-position:0 -5413px}
+select.flags option[value=ZW], select.flags option[value=zw], .country-ZW {background-position:0 -5435px}

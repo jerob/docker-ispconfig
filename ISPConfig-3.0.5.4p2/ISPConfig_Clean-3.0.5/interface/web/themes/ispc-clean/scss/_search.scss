@@ -1,0 +1,119 @@
+@import "compass/css3";
+
+/* Search
+-------------------------------------------------------------- */
+
+div.gs-container {
+  margin-top: 10px;
+  * {
+    margin: 0;
+    padding: 0;
+    background-position: 0 0;
+    text-decoration: none;
+    font-size: 1em;
+  }
+  input {
+    background: url("../icons/x16_sprite.png") no-repeat 2px -119px white;
+    height: 20px;
+    border: 1px solid #444;
+    padding: 0 22px 2px;
+    color: #444;
+    @include border-radius(5px);
+  }
+}
+
+input.gs-loading {
+  background-image: url("../images/loading.gif");
+  background-repeat: no-repeat;
+  background-position: center right;
+}
+
+ul.gs-resultbox {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 300px;
+  z-index: 999999;
+  border: 1px solid #777;
+  font-size: 11px;
+  background: #fff;
+  @include box-shadow(2px 2px 5px 0 #c5c5c5);
+  list-style: none;
+  @include border-radius(5px);
+  max-height: 500px;
+  overflow: auto;
+  li {
+    float: left;
+    width: 100%;
+    clear: both;
+    cursor: pointer;
+    &.gs-cheader {
+      height: 25px;
+      overflow: hidden;
+      padding: 5px 0;
+      color: #fff;
+      background: #6ea6d1;
+      cursor: default;
+      padding-bottom: 10px;
+      p {
+        &.gs-cheader-title {
+          margin: 0 !important;
+          padding: 0 0 0 10px !important;
+          float: left;
+          font-size: 12px;
+          font-weight: bold;
+        }
+        &.gs-cheader-limit {
+          margin: 0 !important;
+          padding: 0 10px 0 0 !important;
+          float: right;
+          font-size: 11px;
+          font-weight: normal;
+        }
+      }
+    }
+    &.gs-cdata {
+      margin: 0 !important;
+      padding: 0 !important;
+      border-bottom: 1px solid #c5c5c5;
+      &:last-child {
+        border-bottom: none;
+      }
+      &:hover {
+        background: #eaf4fd;
+      }
+      a {
+        display: block;
+        padding: 5px 10px;
+        text-decoration: none !important;
+        background: #fff;
+        &:hover {
+          background: #cde0ff;
+        }
+      }
+      img {
+        margin-right: 12px;
+      }
+      p {
+        margin: 0 !important;
+        padding: 0 !important;
+        color: #444;
+        font-size: 10px;
+        min-height: 30px;
+        span.gs-cdata-title {
+          display: inline !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          font-size: 11px;
+          font-weight: bold;
+          color: #000;
+        }
+      }
+    }
+    &:first-child {
+      @include border-radius (5px 5px, 0 0);
+    }
+    &:last-child {
+       @include border-radius (0 0, 5px 5px)
+    }
+  }
+}
