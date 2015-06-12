@@ -1,0 +1,9 @@
+<ul id="submenu">
+    <li class="title"><a>{tmpl_var name='latest_news_txt'}</a></li>
+    <tmpl_loop name="news">
+        <li class="news-item">
+            <a href="{tmpl_var name="link"}" target="_blank" class="news-item"><b>{tmpl_var name="date"}</b><br />
+                {tmpl_var name="title"}</a>
+        </li>
+    </tmpl_loop>
+</ul>

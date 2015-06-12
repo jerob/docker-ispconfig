@@ -1,0 +1,29 @@
+<div class="quota">
+  <h2>{tmpl_var name='mailquota_txt'}</h2>
+  <div>
+    <table class="list">
+      <thead>
+        <tr>
+          <td>{tmpl_var name='email_txt'}</td>
+          <td>{tmpl_var name='name_txt'}</td>
+          <td>{tmpl_var name='used_txt'}</td>
+          <td>{tmpl_var name='quota_txt'}</td>
+        </tr>
+      </thead>
+    <tmpl_if name="has_mailquota">
+    <tmpl_loop name='mailquota'>
+      <tr class="tbl_row_<tmpl_if name='__EVEN__'}even<tmpl_else>uneven</tmpl_if>">
+        <td style="color:{tmpl_var name='display_colour'}">{tmpl_var name='email'}</td>
+        <td style="color:{tmpl_var name='display_colour'}">{tmpl_var name='name'}</td>
+        <td style="color:{tmpl_var name='display_colour'}">{tmpl_var name='used'}</td>
+        <td style="color:{tmpl_var name='display_colour'}">{tmpl_var name='quota'}</td>
+      </tr>
+    </tmpl_loop>
+    <tmpl_else>
+    <tr>
+      <td colspan="4" style="text-align:center;">{tmpl_var name='no_email_accounts_txt'}</td>
+    </tr>
+    </tmpl_if>
+    </table>
+  </div>
+</div>

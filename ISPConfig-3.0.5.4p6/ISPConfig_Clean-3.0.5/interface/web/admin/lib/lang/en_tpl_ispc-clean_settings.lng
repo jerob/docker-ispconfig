@@ -1,0 +1,4 @@
+<?php
+$wb['logo_url_txt'] = 'Logo URL';
+$wb['sidebar_state_txt'] = 'Sidebar';
+?>

@@ -1,0 +1,20 @@
+[pureftpd]
+enabled  = true
+port     = ftp
+filter   = pureftpd
+logpath  = /var/log/syslog
+maxretry = 3
+
+[dovecot-pop3imap]
+enabled = true
+filter = dovecot-pop3imap
+action = iptables-multiport[name=dovecot-pop3imap, port="pop3,pop3s,imap,imaps", protocol=tcp]
+logpath = /var/log/mail.log
+maxretry = 5
+
+[postfix-sasl]
+enabled  = true
+port     = smtp
+filter   = postfix-sasl
+logpath  = /var/log/mail.log
+maxretry = 3

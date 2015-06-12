@@ -1,0 +1,9 @@
+<ul id="topmenu">
+    <tmpl_loop name="nav_top">
+        <tmpl_if name="active">
+            <li id="topNav_current"><a href="#" class="topnav topnav-<tmpl_var name='module'>"><span><tmpl_var name="title"></span></a></li>
+        <tmpl_else>
+            <li><a href="#" onclick="capp('<tmpl_var name='module'>')" class="topnav topnav-<tmpl_var name='module'>"><span><tmpl_var name="title"></span></a></li>
+        </tmpl_if>
+    </tmpl_loop>
+</ul>

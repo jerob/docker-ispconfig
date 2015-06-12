@@ -1,0 +1,109 @@
+@import "compass/css3";
+
+/* Dashboard
+-------------------------------------------------------------- */
+
+.panel_dashboard {
+  width: 100%;
+  padding: 15px;
+}
+
+#dashboard-left-col, #dashboard-right-col {
+  float: left;
+  width: 49%;
+}
+
+#dashboard-left-col {
+  margin-right: 10px;
+}
+
+a.news-item {
+  margin-top: 8px;
+  padding-bottom: 5px !important;
+}
+
+#dashboard-module {
+  overflow: hidden;
+}
+
+.dashboard-modules {
+  float: left;
+  width: 60px;
+  height: 60px;
+  border: 1px dotted #888888;
+  background-color: #cccccc;
+  margin: 10px;
+  background-position: center 5px;
+  background-repeat: no-repeat;
+  text-align: center;
+  overflow: hidden;
+  a {
+    color: black;
+    display: block;
+    font-weight: bold;
+    height: 30px;
+    padding-top: 42px;
+    width: 60px;
+    text-decoration: none;
+    &:hover {
+      color: black;
+      display: block;
+      font-weight: bold;
+      height: 30px;
+      padding-top: 42px;
+      width: 60px;
+      text-decoration: none;
+    }
+  }
+  > :before {
+    font-family: "Entypo";
+    font-size: 26px;
+    display: block;
+    text-align: center;
+    margin-top: -35px;
+  }
+  &.tools a:before {
+    content: '\2692';
+  }
+  &.admin a:before {
+    content: '\e74e';
+  }
+  &.sites a:before {
+    content: '📁';
+  }
+  &.monitor a:before {
+    content: '📊';
+  }
+  &.help a:before {
+    content: '\e788';
+  }
+  &.mail a:before {
+    content: '\2709';
+  }
+  &.vm a:before {
+    content: '\e738';
+  }
+  &.domain a:before {
+    content: '🌎';
+  }
+  &.dns a:before {
+    content: '\e723';
+  }
+  &.client a:before {
+    content: '👥';
+  }
+  &.billing a:before {
+    content: '💳';
+  }
+}
+
+.panel_dashboard h2 {
+  font-size: 20px;
+}
+
+.quota {
+  &:before {
+    content: "";
+    clear: both;
+  }
+}

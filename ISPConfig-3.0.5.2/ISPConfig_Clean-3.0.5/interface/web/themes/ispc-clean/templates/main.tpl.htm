@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">      
+    <head>
+        <!--Possible? Vars in lang= ?-->
+        <meta charset="<tmpl_var name="html_content_encoding">" />
+        <title><tmpl_var name="app_title"> <tmpl_var name="app_version"></title>
+        <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+        <link href="themes/ispc-clean/css/style.css" rel="stylesheet" media="screen" type="text/css" />
+        <!--[if IE 9]><link href="themes/ispc-clean/css/iehacks.css" rel="stylesheet" type="text/css" /><![endif]-->
+        <!--[if lte IE 8]><script type="text/javascript" src="themes/ispc-clean/js/html5shiv.js"></script><![endif]-->
+        <!--[if lte IE 7]><link href="themes/ispc-clean/css/iehacks.css" rel="stylesheet" type="text/css" /><![endif]-->
+        <link href="themes/ispc-clean/css/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
+        <link rel="shortcut icon" href="/themes/ispc-clean/images/favicon.ico" />
+        <script type="text/javascript" src="js/jquery-1.6.3.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>
+        <script type="text/javascript" src="js/scrigo.js.php"></script>
+        <script type="text/javascript" src="js/uni-form/uni-form.jquery.js"></script>
+        <script type="text/javascript" src="js/jquery.ispconfigsearch.js"></script>
+        <script type="text/javascript" src="js/jquery.tipsy.js"></script>
+        <script language="JavaScript" type="text/javascript">
+            jQuery(document).ready(function() {
+                loadInitContent();
+                
+                $("#pageForm").submit(function(e){
+                    //Prevent form submit: e.preventDefault() in lists
+                    if ($(".panel #Filter").length > 0) {
+                        e.preventDefault();
+                    }
+                });
+                
+                jQuery('.subsectiontoggle').live("click", function(){
+                    jQuery(this).children().toggleClass('showing').end().next().slideToggle();
+                });
+                
+                jQuery('#globalsearch').ispconfigSearch({
+                    dataSrc: '/dashboard/ajax_get_json.php?type=globalsearch',
+                    resultsLimit: '$ <tmpl_var name="globalsearch_resultslimit_of_txt"> % <tmpl_var name="globalsearch_resultslimit_results_txt">',
+                    noResultsText: '<tmpl_var name="globalsearch_noresults_text_txt">',
+                    noResultsLimit: '<tmpl_var name="globalsearch_noresults_limit_txt">',
+                    searchFieldWatermark: '<tmpl_var name="globalsearch_searchfield_watermark_txt">'
+                });
+                
+                jQuery('.ttip').tipsy({live: true, gravity: 'ne', html: true});
+                
+                tabChangeDiscard = '<tmpl_var name="tabchange_discard_enabled>';
+                tabChangeWarning = '<tmpl_var name="tabchange_warning_enabled>';
+                tabChangeWarningTxt = '<tmpl_var name="global_tabchange_warning_txt">';
+                tabChangeDiscardTxt = '<tmpl_var name="global_tabchange_discard_txt">';
+				
+				// Store password in browser; works in Firefox, but not Chrome
+				$('#username').live("blur", function(){
+					if($('#dummy_username').val() == '' || $('#dummy_username').val() != $(this).val()){
+						$('#dummy_login').show();
+						$('#dummy_username').attr('value', $(this).val()).trigger('focus').trigger('blur');
+						$('#dummy_login').hide();
+					}
+					if($('#dummy_username').val() == $(this).val() && $(this).val() != ''){
+						$('#passwort').val($('#dummy_passwort').val());
+					} else {
+						$('#passwort').val('');
+					}
+					$('#passwort').focus();
+				});
+				
+				$('#username').live("keyup", function(){
+					$('#dummy_username').val('');
+					$('#dummy_passwort').val('');
+					$('#passwort').val('');
+				});
+				
+            });
+            
+            
+            jQuery(document).bind("change", function(event) {
+                var elName = event.target.localName;
+                if (jQuery(".panel #Filter").length > 0 && elName == 'select') {
+                    event.preventDefault();
+                    jQuery(".panel #Filter").trigger('click');
+                }
+                if(elName == 'select' || elName == 'input' || elName == 'textarea') {
+                    if(jQuery(event.target).hasClass('no-page-form-change') == false) {
+                        // set marker that something was changed
+                        pageFormChanged = true;
+                    }
+                }
+            });
+            
+            jQuery(document).bind("keypress", function(event) {
+                //Use jQuery submit with keypress Enter in panel filterbar
+                if (event.which == '13' && jQuery(".panel #Filter").length > 0 && jQuery(event.target).hasClass('ui-autocomplete-input') == false ) {
+                    event.preventDefault();
+                    jQuery(".panel #Filter").trigger('click');
+                }
+                //Use jQuery submit with keypress Enter in forms
+                if (event.which == '13' && jQuery(".pnl_formsarea button.positive").length > 0 && event.target.localName != 'textarea' && jQuery(event.target).is(':input')) {
+                    event.preventDefault();
+                    jQuery(".pnl_formsarea button.positive:first").not("[disabled='disabled']").trigger('click');
+                }
+            });
+            
+            jQuery(document).delegate('.pnl_listarea th', 'click', function(event) {
+                if(jQuery(this).attr('class').length > 0 && jQuery(".panel #Filter").length > 0 && jQuery(this).hasClass('tbl_col_buttons') == false && jQuery(this).hasClass('tbl_col_limit') == false && jQuery(this).hasClass('tbl_col_nosort') == false) {
+                  event.preventDefault();
+                  var clickevent = jQuery('#Filter').attr('onclick');
+                  var element = jQuery(this).attr('class');
+                  if(typeof clickevent == 'string') {
+                      jQuery('#Filter').attr('onclick', clickevent.replace(".php')", ".php?orderby=" + element + "')"));
+                  }
+                  jQuery(".panel #Filter").trigger('click');
+                  
+                  jQuery("#pageForm").ajaxComplete(function() {
+                      if(jQuery("th."+element).css("background-position") == '0px -15px') {
+                        if(jQuery("th."+element).css("text-align") == "right") {
+                          jQuery("th."+element).css("text-align","left");
+                        } else {
+                          jQuery("th."+element).css("text-align","right");
+                        }
+                      } else {
+                        jQuery(".pnl_listarea th").css("text-align","");
+                      }
+                      jQuery(".pnl_listarea th").css("background-position","0 0");
+                      jQuery("th."+element).css("background-position","0 -15px");
+                  });
+                }
+            });
+            
+        </script>
+    </head>
+    <body>
+        <!-- begin: header -->
+        <div class="header-wrap">
+            <header>
+                <nav id="topsubnav">
+                    <!-- start: skip link navigation -->
+                    <a class="skip" href="#navigation" title="skip link">Skip to the navigation</a><span class="hideme">.</span>
+                    <a class="skip" href="#content" title="skip link">Skip to the content</a><span class="hideme">.</span>
+                    <!-- end: skip link navigation -->
+                    <tmpl_if name="cpuser">
+                        <a href="#logout" onclick="loadContent('login/logout.php');"><tmpl_var format="strtoupper" name="logout_txt"> <tmpl_var format="strtoupper" name="cpuser"></a><!-- | <a href="#" onclick="capp('help')">Help</a> | <a href="#">Imprint</a>-->
+                        <tmpl_if name='usertype' op='==' value='normaluser'><input type="text" id="globalsearch" size="25" value="" /></tmpl_if>
+                    </tmpl_if>
+                </nav>
+                <h1 id="ir-HeaderLogo" class="swap" style="background-image: url(<tmpl_if name='app_logo' op='!=' value='themes/default/images/header_logo.png'><tmpl_var name='app_logo'><tmpl_else>themes/ispc-clean/images/header_logo.png</tmpl_if>) !important"><span>ISPConfig 3</span></h1>
+                <span class="sub-line">Hosting Control Panel</span>
+            </header>
+        </div>
+        <!-- end: header -->
+
+        <a id="navigation" name="navigation"></a><!-- skiplink anchor: navigation -->
+        <!-- begin: main navigation #nav -->
+        <nav id="topNav">&nbsp;</nav>
+        <!-- end: main navigation -->
+
+       
+        <div class="page">
+            <!-- begin: main content area #main -->
+            <section id="main" name="content">
+                <nav id="sideNav" class="clearfix">&nbsp;</nav>
+                <!-- begin: #content -->
+                <section id="content">
+                    <form method="post" action="" id="pageForm" name="pageForm" enctype="multipart/form-data" class="uniForm">
+                        <div id="pageContent"><!-- AJAX CONTENT --></div>
+                    </form>
+                    <div id="ie_clearing">&nbsp;</div>
+                    <!-- End: IE Column Clearing -->
+                </section>
+                <!-- end: #content -->
+            </section>
+            <!-- end: #main -->
+        </div>
+
+            
+        <!-- begin: footer -->
+        <div class="footer-wrap">
+            <footer>
+                Powered by <a href="<tmpl_var name="app_link">" target="_blank"><tmpl_var name="app_title"></a>
+            </footer>
+        <div>
+        <!-- end: footer -->        
+		
+<div id="dummy_login" style="display:none;position:absolute;top:-1000px;left:-1000px;">
+<form action="" method="post" target="dummy_login" id="dummy_login_form">
+<input name="username" id="dummy_username" type="text" autocomplete="on" value="" />
+<input name="passwort" id="dummy_passwort" type="password" autocomplete="on" value="" />
+<input type="submit" value="Login" id="dummy_submit"/>
+</form>
+<iframe id="dummy_iframe" src="dummy_login.html" name="dummy_login" style="display:none;"></iframe>
+</div>
+    </body>
+</html>

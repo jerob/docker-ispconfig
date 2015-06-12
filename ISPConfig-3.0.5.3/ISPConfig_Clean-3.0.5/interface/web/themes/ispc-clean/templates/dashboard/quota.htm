@@ -1,0 +1,29 @@
+<div class="quota">
+  <h2>{tmpl_var name='quota_txt'}</h2>
+  <div>
+    <table class="list">
+      <thead>
+        <tr>
+          <td>{tmpl_var name='domain_txt'}</td>
+          <td>{tmpl_var name='used_txt'}</td>
+          <td>{tmpl_var name='soft_txt'}</td>
+          <td>{tmpl_var name='hard_txt'}</td>
+        </tr>
+      </thead>
+    <tmpl_if name="has_quota">
+    <tmpl_loop name='quota'>
+      <tr class="tbl_row_<tmpl_if name='__EVEN__'}even<tmpl_else>uneven</tmpl_if>">
+        <td style="color:{tmpl_var name='display_colour'}">{tmpl_var name='domain'}</td>
+        <td style="color:{tmpl_var name='display_colour'}">{tmpl_var name='used'}</td>
+        <td style="color:{tmpl_var name='display_colour'}">{tmpl_var name='soft'}</td>
+        <td style="color:{tmpl_var name='display_colour'}">{tmpl_var name='hard'}</td>
+      </tr>
+    </tmpl_loop>
+    <tmpl_else>
+    <tr>
+      <td colspan="4" style="text-align:center;">{tmpl_var name='no_sites_txt'}</td>
+    </tr>
+    </tmpl_if>
+    </table>
+  </div>
+</div>

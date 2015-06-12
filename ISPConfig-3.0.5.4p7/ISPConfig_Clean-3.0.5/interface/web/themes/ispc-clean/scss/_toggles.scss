@@ -1,0 +1,79 @@
+@import "compass/css3";
+
+/* Toggles
+-------------------------------------------------------------- */
+div.subsectiontoggle {
+  border: 1px solid #ccc;
+  font-weight: bold;
+  font-size: 14px;
+  padding-top: 10px;
+  padding-bottom: 0;
+  margin-top: 5px;
+  text-indent: 15px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  background-color: #f4f4f4;
+  @include border-radius(5px);
+  span {
+    display: inline-block;
+    margin-bottom: -3px;
+    margin-right: 10px;
+    width: 16px;
+    height: 16px;
+    background: url("../icons/button_sprite.png") 0 -72px no-repeat transparent;
+    &.showing {
+      background-position: 0 -40px;
+    }
+  }
+  em {
+    display: block;
+    position: relative;
+    left: 425px;
+    top: -13px;
+    margin-bottom: -3px;
+    width: 13px;
+    height: 13px;
+    background: url("../images/chevron.png") top left no-repeat;
+    -webkit-transform: none;
+    -moz-transform: none;
+    -khtml-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
+    -webkit-transition-duration: .2s;
+    -moz-transition-duration: .2s;
+    -khtml-transition-duration: .2s;
+    -o-transition-duration: .2s;
+    -ms-transition-duration: .2s;
+    transition-duration: .2s;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    -khtml-transition-property: -khtml-transform;
+    -o-transition-property: -o-transform;
+    -ms-transition-property: -ms-transform;
+    transition-property: transform;
+    &.showing {
+      display: block;
+      position: relative;
+      left: 425px;
+      top: -13px;
+      background: url("../images/chevron.png") top left no-repeat;
+      width: 13px;
+      height: 13px;
+      -webkit-transform: rotate(90deg);
+      -moz-transform: rotate(90deg);
+      -khtml-transform: rotate(90deg);
+      -o-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+      transform: rotate(90deg);
+    }
+  }
+  &:hover em {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -khtml-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+}

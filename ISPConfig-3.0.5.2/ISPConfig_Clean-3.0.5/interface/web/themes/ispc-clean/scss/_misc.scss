@@ -1,0 +1,174 @@
+@import "compass/css3";
+
+/* Password Strength
+-------------------------------------------------------------- */
+#passBar {
+    width: 101px; height: 10px;
+    background: url("../images/meter_bg.gif") repeat-x bottom left;
+    margin: 2px 0;
+    float: left;
+}
+#passText {
+    padding: 0;
+    float: left;
+}
+
+/* Don't Know Where this is used
+-------------------------------------------------------------- */
+div.df-container {
+}
+div.df-container * {
+    margin: 0;
+    padding: 0;
+    background-position: 0 0;
+    text-decoration: none;
+    font-size: 1em;
+}
+div.df-container input {
+}
+input.df-loading {
+    background-image: url("../images/loading.gif");
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+ul.df-resultbox {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-width: 250px;
+    max-width: 500px;
+    z-index: 999999;
+    border: 1px solid #777;
+    font-size: 11px;
+    background: #fff;
+    @include box-shadow(2px 2px 5px 0 #c5c5c5);
+    list-style: none;
+    @include border-radius(5px);
+}
+ul.df-resultbox li {
+    float: left;
+    width: 100%;
+    clear: both;
+    cursor: pointer;
+}
+ul.df-resultbox li.df-cheader {
+    height: 13px;
+    overflow: hidden;
+    padding: 5px 0;
+    color: #fff;
+    background: #6ea6d1;
+    cursor:default;
+    padding-bottom:10px;
+}
+ul.df-resultbox li.df-cheader p.df-cheader-title {
+    margin: 0 !important;
+    padding: 0 0 0 10px !important;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+}
+ul.df-resultbox li.df-cheader p.df-cheader-limit {
+    margin: 0 !important;
+    padding: 0 10px 0 0 !important;
+    float: right;
+    font-size: 11px;
+    font-weight: normal;
+}
+ul.df-resultbox li.df-cdata {
+    margin: 0 !important;
+    padding: 0 !important;
+    border-bottom: 1px solid #c5c5c5;
+}
+ul.df-resultbox li.df-cdata:last-child {
+    border-bottom: none;
+}
+ul.df-resultbox li.df-cdata:hover {
+    background: #eaf4fd;
+}
+ul.df-resultbox li.df-cdata a {
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none !important;
+    background: #fff;
+}
+ul.df-resultbox li.df-cdata a:hover {
+    background: #cde0ff;
+}
+ul.df-resultbox li.df-cdata img {
+    margin-right: 12px;
+}
+ul.df-resultbox li.df-cdata p {
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #444;
+    font-size: 10px;
+    min-height:30px;
+}
+ul.df-resultbox li.df-cdata p span.df-cdata-title {
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 11px;
+    font-weight: bold;
+    color: #000;
+}
+ul.df-resultbox li:first-child {
+    @include border-radius (5px 5px, 0 0);
+}
+ul.df-resultbox li:last-child {
+    @include border-radius (0 0, 5px 5px);
+}
+
+/* Different stuff
+-------------------------------------------------------------- */
+
+div.group-icon {
+  float: left;
+  padding: 2px 0;
+}
+
+.group-admin, .group-user {
+  height: 20px;
+  width: 20px;
+  padding: 0;
+  float: left;
+  background: url("../icons/x16_sprite.png") no-repeat transparent;
+}
+
+.group-admin {
+  background-position: 0 -380px;
+}
+
+.group-user {
+  background-position: 0 -400px;
+}
+
+span {
+  &.marked {
+    color: #cc0000;
+  }
+  &.small {
+    font-size: 0.9em;
+  }
+}
+
+#ajaxloader {
+  position: absolute;
+  width: 325px;
+  height: 150px;
+  background: white url('../images/ajax-loader.gif') no-repeat center center;
+  border: solid 2px #e1e1e1;
+  border-radius: 10px;
+  /*background: rgba(255, 255, 255, 0.85);*/
+  padding: 20px;
+  text-align: center;
+  z-index: 100;
+}
+
+.blockLabel.email_at {
+  width: 20px !important;
+  margin: 1.6em 0.3em 0 0 !important;
+}
+
+.textDisplay {
+  display: block;
+}

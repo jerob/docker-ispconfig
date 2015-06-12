@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+    <head>
+        <meta charset="<tmpl_var name="html_content_encoding">" />
+        <title><tmpl_var name="app_title"></title>
+        <link href="themes/ispc-clean/css/style.css" rel="stylesheet" media="screen" type="text/css" />
+        <!--[if IE 9]><link href="themes/ispc-clean/css/iehacks.css" rel="stylesheet" type="text/css" /><![endif]-->
+        <!--[if lte IE 8]><script type="text/javascript" src="themes/ispc-clean/js/html5shiv.js"></script><![endif]-->
+        <!--[if lte IE 7]><link href="themes/ispc-clean/css/iehacks.css" rel="stylesheet" type="text/css" /><![endif]-->
+        <script type="text/javascript" src="js/jquery-1.6.3.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>
+        <script type="text/javascript" src="js/scrigo.js.php"></script>
+        <script type="text/javascript" src="js/uni-form/uni-form.jquery.js"></script>
+        <script type="text/javascript" src="js/jquery.tipsy.js"></script>
+        <link rel="shortcut icon" href="/themes/ispc-clean/images/favicon.ico" />
+        <script language="JavaScript" type="text/javascript">
+            jQuery(document).ready(function() {
+                loadInitContent();
+                
+                $("#pageForm").submit(function(e){
+                    //Prevent form submit: e.preventDefault() in lists
+                    if ($(".panel #Filter").length > 0) {
+                        e.preventDefault();
+                    }
+                });
+                
+                jQuery('.subsectiontoggle').live("click", function(){
+                    jQuery(this).children().toggleClass('showing').end().next().slideToggle();
+                });
+                
+                jQuery('.ttip').tipsy({live: true, gravity: 'ne', html: true});
+            });
+            
+            
+            jQuery(document).bind("change", function(event) {
+                if (jQuery(".panel #Filter").length > 0 && event.target.localName == 'select') {
+                    jQuery(".panel #Filter").trigger('click');
+                }
+            });
+            
+            jQuery(document).bind("keypress", function(event) {
+                //Use jQuery submit with keypress Enter in panel filterbar
+                if (event.which == '13' && jQuery(".panel #Filter").length > 0) {
+                    jQuery(".panel #Filter").trigger('click');
+                }
+                //Use jQuery submit with keypress Enter in forms
+                if (event.which == '13' && jQuery(".pnl_formsarea button.positive").length > 0 && event.target.localName != 'textarea') {
+                    jQuery(".pnl_formsarea button.positive:first").trigger('click');
+                }
+            });
+            $(function() {
+
+                $("table").delegate('td','mouseover mouseleave', function(e) {
+                    if (e.type == 'mouseover') {
+                        $(this).parent().addClass("hover");
+                        $("colgroup").eq($(this).index()).addClass("hover");
+                    } else {
+                        $(this).parent().removeClass("hover");
+                        $("colgroup").eq($(this).index()).removeClass("hover");
+                    }
+                });
+
+            });
+        </script>
+    </head>
+    <body class="login">         
+        <form method="post" action="" id="pageForm" name="pageForm" enctype="multipart/form-data" class="uniForm">
+            <div id="pageContent"> AJAX CONTENT </div>
+        </form>
+    </body>
+</html>

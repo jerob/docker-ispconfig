@@ -1,0 +1,11 @@
+<h2>{tmpl_var name='limits_txt'}</h2>
+<div id="dashboard-limits">
+	<table class="list">
+	<tmpl_loop name='rows'>
+		<tr class="tbl_row_<tmpl_if name='__EVEN__'}even<tmpl_else>uneven</tmpl_if>">
+		  <td>{tmpl_var name='field_txt'}</td>
+		  <td style="white-space: nowrap">{tmpl_var name='usage'} {tmpl_var name='of_txt'} {tmpl_var name='value'}</td>
+		</tr>
+	</tmpl_loop>
+	</table>
+</div>

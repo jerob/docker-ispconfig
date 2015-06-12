@@ -1,0 +1,27 @@
+<tmpl_if name="form_hint">
+    <h2><tmpl_var name="form_hint"></h2>
+</tmpl_if>
+<div class="tabbox_tabs">
+    <ul>
+        <tmpl_loop name="formTab">
+            <tmpl_if name="active">
+                <li class="active"><a href="#" onclick="return changeTab('<tmpl_var name='name'>','<tmpl_var name='app_module'>/<tmpl_var name='form_action'>')"><tmpl_var name='title'></a></li>
+            <tmpl_else>
+                <li><a href="#" onclick="return changeTab('<tmpl_var name='name'>','<tmpl_var name='app_module'>/<tmpl_var name='form_action'>')"><tmpl_var name='title'></a></li>
+            </tmpl_if>
+        </tmpl_loop>
+    </ul>
+</div>
+<div id="tabbox_content">
+    <tmpl_if name="msg">
+        <div id="OKMsg"><p><tmpl_var name="msg"></p></div>
+    </tmpl_if>
+    <tmpl_if name="error">
+        <div id="errorMsg"><h3>ERROR</h3><ol><tmpl_var name="error"></ol></div>
+    </tmpl_if>
+    
+    <tmpl_dyninclude name="content_tpl">
+</div>
+
+<input type="hidden" name="next_tab" value="">
+<input type="hidden" name="phpsessid" value="{tmpl_var name='phpsessid'}">

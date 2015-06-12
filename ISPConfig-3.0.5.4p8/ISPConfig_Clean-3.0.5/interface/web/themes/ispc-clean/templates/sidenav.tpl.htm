@@ -1,0 +1,28 @@
+<ul id="submenu">
+    <tmpl_loop name="nav_left">
+        <li class="title">
+        <tmpl_if name="startpage">
+            <a href="#" onclick="loadContent('<tmpl_var name='startpage'>')">
+        </tmpl_if>
+        <tmpl_var name="title">
+            <tmpl_if name="startpage">
+                </a>
+            </tmpl_if>
+        </li>
+            <tmpl_loop name="items">
+                <li <tmpl_if name="html_id"> id='<tmpl_var name="html_id">' </tmpl_if>>
+                    <tmpl_if name="link">
+                        <tmpl_if name="target" op="==" value="_blank">
+                        <a href="<tmpl_var name='link'>" target="_blank">
+                        <tmpl_else>
+                        <a href="#" onclick="loadContent('<tmpl_var name='link'>')">
+                        </tmpl_if>
+                    </tmpl_if>
+                    <tmpl_var name="title">
+                    <tmpl_if name="link">
+                        </a>
+                    </tmpl_if>
+                </li>
+            </tmpl_loop>
+    </tmpl_loop>
+</ul>

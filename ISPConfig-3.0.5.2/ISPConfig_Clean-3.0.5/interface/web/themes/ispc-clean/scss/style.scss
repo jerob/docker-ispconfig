@@ -1,0 +1,207 @@
+@import "compass/css3";
+
+@import "bits";
+@import "buttons";
+@import "fonts";
+@import "flags";
+@import "header";
+@import "navigation";
+@import "dashboard";
+@import "login";
+@import "forms";
+@import "systemmonitor";
+@import "tooltips";
+@import "toggles";
+@import "footer";
+@import "search";
+@import "misc";
+@import "uniform";
+
+@charset "UTF-8";
+
+/* Global
+-------------------------------------------------------------- */
+
+* {
+  margin: 0;
+  padding: 0;
+  @include box-sizing( border-box);
+  font-size: 100.01%;
+}
+
+body {
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 75.00%;
+  color: #444;
+  background: #cccccc;
+}
+
+ul, ol, dl {
+  line-height: 1.5em;
+  margin: 0 0 1em 1em;
+}
+
+li {
+  margin-left: 1.5em;
+  line-height: 1.5em;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  margin: 0 0 1em 2em;
+}
+
+a {
+  color: #4D87C7;
+  text-decoration: none;
+  &:focus, &:hover, &:active {
+    color: #182E7A;
+    text-decoration: underline;
+  }
+}
+
+hr {
+  color: #fff;
+  background: transparent;
+  margin: 0 0 0.5em 0;
+  padding: 0 0 0.5em 0;
+  border: 0;
+  border-bottom: 1px #eee solid;
+}
+
+textarea, pre, tt, code {
+  font-family: Consolas,"Lucida Console","Courier New",monospace;
+  font-size: 0.9em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Trebuchet MS", sans-serif;
+  font-weight: bold;
+  color: #666;
+  margin: 0 0 0.25em 0;
+}
+
+/* 30px */
+
+h1, h2 {
+  font-size: 200%;
+}
+
+/* 24px */
+
+h3 {
+  font-size: 150%;
+}
+
+/* 18px */
+
+h4 {
+  font-size: 133.33%;
+}
+
+/* 16px */
+
+h5 {
+  font-size: 116.67%;
+}
+
+/* 14px */
+
+h6 {
+  font-size: 116.67%;
+  font-style: italic;
+}
+
+p {
+  line-height: 1.5em;
+  margin: 0 0 1em 0;
+  &.prefix {
+    float: left;
+    margin: 0;
+    text-align: right;
+  }
+  &.label {
+    float: left;
+    margin: 5px 15px 0 0;
+  }
+  &.value {
+    float: left;
+    margin: 0 0 0 2px;
+  }
+}
+
+cite {
+  font-style: italic;
+}
+
+blockquote {
+  font-style: italic;
+  margin: 0 0 1em 1.5em;
+}
+
+strong, b {
+  font-weight: bold;
+}
+
+em, i {
+  font-style: italic;
+}
+
+pre, code {
+  font-family: monospace;
+  font-size: 1.1em;
+}
+
+acronym, abbr {
+  letter-spacing: .07em;
+  border-bottom: .1em dashed #c00;
+  cursor: help;
+}
+
+header, #nav, #main, footer {
+  clear: both;
+}
+
+select, input, textarea {
+    background: #FFFFFF;
+    border: 1px solid #DFDFDF;
+    padding: 1px;
+    outline:none;
+}
+
+.skip, .hideme, .print {
+  height: 1px;
+  left: -1000em;
+  position: absolute;
+  top: -1000em;
+  width: 1px;
+}
+
+/* Main 
+-------------------------------------------------------------- */
+#main { 
+    background: #fff;
+    margin: 0 auto;
+    padding: 1em 0;
+    width: 90%;
+    min-height: 800px;
+    height: 100%;
+    overflow: hidden;
+}
+
+.page {
+    clear: both;
+    height: 100%;    
+    width: 100%;
+    background: url("../images/shadow-bg.gif") repeat-x 0 bottom #e3e7ed;
+}
+
+#content { 
+    width: 80%;
+    padding: 0px 10px 10px 10px;
+    border-left: 1px #ddd solid;
+    float: left;
+}

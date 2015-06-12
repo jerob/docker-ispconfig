@@ -1,0 +1,139 @@
+@import "compass/css3";
+
+/* Navigation
+-------------------------------------------------------------- */
+
+
+/* Top Navigation
+-------------------------------------------------------------- */
+#topNav {
+  margin: 0 auto;
+  clear: both;
+  background: url("../images/menu-bg.gif") repeat-x 0 0;
+  width: 100%;
+  font-size: 0;
+  ul {
+    margin: 0 auto;
+    list-style: none;
+    width: 90%;
+    li {
+      display: inline;
+      margin: 0 2px 0 0;
+    }
+  }
+  a {
+    color: white;
+    display: inline-block;
+    height: 25px;
+    font-size: 16px;
+    padding: 20px 10px 20px 10px;
+    text-align: center;
+    text-decoration: none;
+    &:hover {
+      background-color: #eeeeee;
+      color: #000000;
+    }
+  }
+  #topNav_current a {
+    color: black;
+    background-color: #ffffff;
+  }
+  a span {
+    padding: 0 0 0 5px;
+  }
+}
+
+.topnav-:before { font-family: "Entypo"; content: '🔑';}
+.topnav-tools:before { font-family: "Entypo"; content: '\2692';}
+.topnav-admin:before { font-family: "Entypo"; content: '\e74e';}
+.topnav-sites:before { font-family: "Entypo"; content: '📁';}
+.topnav-monitor:before { font-family: "Entypo"; content: '📊';}
+.topnav-help:before { font-family: "Entypo";  content: '\e788';}
+.topnav-mail:before, .topnav-mailuser:before { font-family: "Entypo"; content: '\2709';}
+.topnav-vm:before { font-family: "Entypo"; content: '\e738';}
+.topnav-domain:before { font-family: "Entypo"; content: '🌎';}
+.topnav-dns:before { font-family: "Entypo"; content: '\e723';}
+.topnav-dashboard:before { font-family: "Entypo"; content: '\2302';}
+.topnav-client:before { font-family: "Entypo"; content: '👥';}
+.topnav-billing:before { font-family: "Entypo"; content: '💳';}
+
+/* SideNav + SubMenu
+-------------------------------------------------------------- */
+#sideNav {
+  width: 20%;
+  float: left;
+  padding: 0 10px 0 0;
+}
+
+#submenu {
+  overflow: hidden;
+  margin: 0px;
+  list-style-type: none;
+  border-bottom: 2px #ddd solid;
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 0.9em;
+  }
+  a, strong {
+    display: block;
+    padding: 2px 0px 2px 10%;
+    text-decoration: none;
+    background-color: #fff;
+    color: #444;
+    border-bottom: 1px #eee solid;
+  }
+  li {
+    &.title {
+      padding: 0px;
+      font-weight: bold;
+      color: #444;
+      background-color: #fff;
+      border-top: 2px #888 solid;
+      font-size: 1.1em;
+      a {
+        background-color: #f0f8ff;
+        color: #444;
+        &:hover {
+          color: white;
+        }
+      }
+    }
+    span {
+      display: block;
+      width: 90%;
+      padding: 3px 0px 3px 10%;
+      font-weight: bold;
+      border-bottom: 1px #ddd solid;
+    }
+    &.active, strong {
+      width: 90%;
+      padding: 3px 0px 3px 10%;
+      font-weight: bold;
+      color: #fff;
+      background-color: #aab;
+      border-bottom: 1px #eee solid;
+    }
+    a {
+      padding-left: 10%;
+      background-color: #fff;
+      color: #444;
+      &:focus, &:hover, &:active {
+        background-color: #f63;
+        color: #fff;
+      }
+    }
+  }
+  * select#server_id {
+    margin: 3px 10%;
+    padding: 1px;
+    width: 80%;
+  }
+}
