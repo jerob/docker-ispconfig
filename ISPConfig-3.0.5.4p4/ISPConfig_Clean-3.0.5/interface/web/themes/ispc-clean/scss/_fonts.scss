@@ -1,0 +1,14 @@
+@import "compass/css3";
+
+/* Fonts
+-------------------------------------------------------------- */
+
+@font-face {
+    font-family: 'Entypo';
+    src: url('../fonts/entypo.eot?#iefix') format('embedded-opentype'), 
+         url('../fonts/entypo.woff') format('woff'), 
+         url('../fonts/entypo.ttf')  format('truetype'),
+         url('../fonts/entypo.svg#svgEntypo') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

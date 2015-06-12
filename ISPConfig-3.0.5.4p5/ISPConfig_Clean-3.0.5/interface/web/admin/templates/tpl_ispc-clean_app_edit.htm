@@ -1,0 +1,56 @@
+<h2><tmpl_var name="list_head_txt"></h2>
+<p><tmpl_var name="list_desc_txt"></p>
+
+<div class="panel panel_apps_alias">
+
+    <div class="pnl_formsarea">
+        <fieldset class="inlineLabels">
+            <div class="ctrlHolder">
+                <label for="title">{tmpl_var name='title_txt'}</label>
+                <input name="title" id="title" value="{tmpl_var name='title'}" size="30" maxlength="255" type="text" class="textInput" />
+            </div>
+            <div class="ctrlHolder">
+                <label for="desc">{tmpl_var name='desc_txt'}</label>
+                <input name="desc" id="desc" value="{tmpl_var name='desc'}" size="30" maxlength="255" type="text" class="textInput" />
+            </div>
+            <div class="ctrlHolder">
+                <label for="image_url">{tmpl_var name='image_url_txt'}</label>
+                <input name="image_url" id="image_url" value="{tmpl_var name='image_url'}" size="30" maxlength="255" type="text" class="textInput" />
+            </div>
+            <div class="ctrlHolder">
+                <label for="link">{tmpl_var name='link_txt'}</label>
+                <input name="link" id="link" value="{tmpl_var name='link'}" size="30" maxlength="255" type="text" class="textInput" />
+            </div>
+            <div class="ctrlHolder">
+                <label for="target">{tmpl_var name='target_txt'}</label>
+                <select class="selectInput" id="target" name="target">
+                    {tmpl_var name='target'}
+                </select>
+            </div>
+            <div class="ctrlHolder">
+                <label for="sorting">{tmpl_var name='sorting_txt'}</label>
+                <input name="sorting" id="sorting" value="{tmpl_var name='sorting'}" size="10" maxlength="10" type="text" class="textInput" />
+            </div>
+            <div class="ctrlHolder">
+                <label for="category">{tmpl_var name='category_txt'}</label>
+                <select class="selectInput" id="category" name="category">
+                    {tmpl_var name='category'}
+                </select>
+            </div>
+            <div class="ctrlHolder">
+                <p class="label">{tmpl_var name='active_txt'}</p>
+                <div class="multiField">
+                    {tmpl_var name='active'}
+                </div>
+            </div>
+        </fieldset>
+
+        <input type="hidden" name="id" value="{tmpl_var name='id'}">
+            
+        <div class="buttonHolder buttons">
+            <button class="positive iconstxt icoPositive" type="button" value="{tmpl_var name='btn_save_txt'}" onclick="submitForm('pageForm','admin/tpl_ispc-clean_app_edit.php');"><span>{tmpl_var name='btn_save_txt'}</span></button>
+            <button class="negative iconstxt icoNegative" type="button" value="{tmpl_var name='btn_cancel_txt'}" onclick="loadContent('admin/tpl_ispc-clean_app_list')"><span>{tmpl_var name='btn_cancel_txt'}</span></button>
+        </div>
+    </div>
+  
+</div>

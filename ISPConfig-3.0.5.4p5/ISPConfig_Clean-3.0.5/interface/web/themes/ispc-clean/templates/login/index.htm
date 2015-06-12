@@ -1,0 +1,50 @@
+<tmpl_if name='sidebar_active'>
+<aside id="sidebar" class="login-sidebar">
+    {tmpl_var name='sidebar_records'}
+</aside>
+</tmpl_if>
+<div id="login-form">
+
+    <div class="box-inner">
+        <img title="<tmpl_var name="app_title">" id="logo" alt="<tmpl_var name="app_title">" src="<tmpl_var name='app_logo'>">
+        <table>
+            <tbody>
+                <tr>
+                    <td class="title">
+                        <label for="username">{tmpl_var name='username_txt'}</label>
+                    </td>
+                    <td class="input">
+                        <input name="username" id="username" value="" size="30" maxlength="255" type="text" class="textInput"  onkeypress="if (event.keyCode && event.keyCode == 13) {submitLoginForm('pageForm'); return false;};" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">
+                        <label for="passwort">{tmpl_var name='password_txt'}</label>
+                    </td>
+                    <td class="input">
+                        <input name="passwort" id="passwort" value="" size="30" maxlength="255" type="password" class="textInput"  onkeypress="if (event.keyCode && event.keyCode == 13) {submitLoginForm('pageForm'); return false;};" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <input type="hidden" name="s_mod" value="login" />
+        <input type="hidden" name="s_pg" value="index" />
+        <p id="loginbutton">
+            <button type="button" class="button" value="{tmpl_var name="add_new_record_txt"}" onclick="submitLoginForm('pageForm');"><span>{tmpl_var name='login_button_txt'}</span></button>
+        </p>
+        <p class="powered">Powered by <a href="<tmpl_var name="app_link">" target="_blank"><tmpl_var name="app_title"></a></p>
+    </div>
+    <div class="box-bottom">
+        <div id="message">
+            <tmpl_if name="msg">
+                <div id="OKMsg"><p><tmpl_var name="msg"></p></div>
+            </tmpl_if>
+            <tmpl_if name="error">
+                <div id="errorMsg">
+                    <div class="warning"><tmpl_var name="error"></div>
+                    <br /><a href="#" onclick="loadContent('login/password_reset.php');">{tmpl_var name='pw_lost_txt'}</a>
+                </div>
+            </tmpl_if>
+        </div>
+    </div>
+</div>

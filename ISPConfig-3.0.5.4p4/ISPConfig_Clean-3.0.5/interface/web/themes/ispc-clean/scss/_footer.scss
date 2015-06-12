@@ -1,0 +1,29 @@
+@import "compass/css3";
+
+/* Footer
+-------------------------------------------------------------- */
+
+.footer-wrap {
+  width: 100%;
+  margin: 0 auto;
+  background: url("../images/footer-bg-bot.gif") repeat-x 0 0 #252d39;
+  padding: 10px 20px;
+}
+
+footer {
+  margin: 0 auto;
+  width: 90%;
+  color: white;
+  font-size: 0.8em;
+  text-align: center;
+  a {
+    color: #999;
+    background: transparent;
+    font-weight: bold;
+    &:hover, &:active {
+      color: #4D87C7;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+  }
+}

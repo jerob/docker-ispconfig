@@ -1,0 +1,35 @@
+@import "compass/css3";
+
+/* Image-Replacement 
+This probably should be broken into individual areas
+*/
+.swap { background-repeat:no-repeat; }
+.swap span { display:none; height:16px; } 
+#ir-HeaderLogo {
+    background-image: url("../images/header_logo.png");
+    width: 239px;
+    height: 90px;
+    margin: 0 0 0.2em;
+} 
+div#ir-Yes,
+div#ir-No:before {
+    font-family: Entypo;
+    text-align: center;
+}
+#ir-Yes:before {
+    height: 16px;
+    content: "✓ ";
+    color: green;
+}
+#ir-No:before {
+    height: 16px;
+    content: "✕ ";
+    color: red;
+}
+.swap {
+    background-repeat: no-repeat;
+}
+.swap span {
+    display: none;
+    height: 16px;
+}

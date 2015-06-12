@@ -1,0 +1,237 @@
+@import "compass/css3";
+
+/* Forms and Tables
+-------------------------------------------------------------- */
+
+table {
+  width: auto;
+  border-collapse: collapse;
+  margin-bottom: 0.5em;
+  &.full {
+    width: 100%;
+  }
+  &.fixed {
+    table-layout: fixed;
+  }
+  &.list td {
+    max-width: 350px;
+    min-width: 32px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -icab-text-overflow: ellipsis;
+    -khtml-text-overflow: ellipsis;
+    -moz-text-overflow: ellipsis;
+    -webkit-text-overflow: ellipsis;
+  }
+}
+
+th, td {
+  padding: 0.5em;
+  text-align: left;
+}
+
+thead th {
+  background: #444444 url("../images/menu-bg.gif") repeat-x 0 0;
+  color: #fff;
+}
+
+tbody th {
+  background: #ccc;
+  color: #333;
+  &.sub {
+    background: #ddd;
+    color: #333;
+  }
+}
+
+table.list {
+  th[class$="_pid"], td[class$="_pid"], th[class$="_active"], td[class$="_active"], th.tbl_col_autoresponder, td.tbl_col_autoresponder {
+    width: 70px;
+    text-align: center;
+  }
+  .tbl_col_buttons, .tbl_col_limit {
+    width: 150px;
+  }
+}
+
+.tbl_col_client_pid input {
+  width: 50px;
+}
+
+.pnl_listarea th[class^="tbl_col"] {
+  cursor: pointer;
+  &:hover {
+    background-position: 0 -15px !important;
+  }
+}
+
+.pageForm_description {
+  font-size: 12px;
+}
+
+/* Tab-Box */
+
+.tabbox_tabs {
+  border-bottom: 1px solid #d3d3d3;
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    display: inline;
+    margin: 0 2px 0 0;
+  }
+  a {
+    padding: 0 1em;
+    text-decoration: none;
+    color: black;
+    background: #d3d3d3;
+    border: 1px solid #d3d3d3;
+    &:hover {
+      background: #fc0;
+      color: #540;
+    }
+  }
+  .active a {
+    font-weight: bold;
+    color: #ff6600;
+    background: #ffffff;
+  }
+}
+
+.pnl_toolsarea fieldset, .pnl_listarea fieldset, .pnl_formsarea fieldset {
+  border-top: 1px solid #949494;
+  margin: 20px 0;
+}
+
+.pnl_toolsarea fieldset legend, .pnl_listarea fieldset legend {
+  font-weight: bold;
+  color: #6299c5;
+  display: none;
+}
+
+.pnl_formarea fieldset {
+  font-weight: bold;
+}
+
+/* hide line and legend when inside tabbed content */
+
+#tabbox_content * {
+  .pnl_toolsarea fieldset, .pnl_listarea fieldset, .pnl_formsarea fieldset {
+    border: none !important;
+  }
+  .pnl_toolsarea fieldset legend, .pnl_listarea fieldset legend, .pnl_formsarea fieldset legend {
+    display: none !important;
+  }
+}
+
+/* Lists */
+
+table.list {
+  width: 100%;
+  border: 1px solid #d3d3d3 !important;
+  thead th {
+    font-size: 10px;
+  }
+  tbody {
+    border: 1px solid #d3d3d3 !important;
+  }
+  tfoot td {
+    color: white;
+    text-align: center;
+    background: #f8f8f8 url("../images/menu-bg.gif") repeat;
+    padding: 16px 8px 8px 8px;
+    a {
+      color: black !important;
+    }
+  }
+  .tbl_paging img {
+    vertical-align: top;
+  }
+  .tbl_row_even {
+    background: #fcfcfc;
+  }
+  .tbl_row_uneven {
+    background: #f0f8ff;
+  }
+  tr:hover {
+    background: #fffacd;
+  }
+  td {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    &.tbl_col_buttons {
+      word-wrap: normal;
+      white-space: normal;
+      overflow: visible;
+    }
+  }
+}
+
+/* Form Length Classes */
+
+.textInput.formLengthBool {
+  width: 25px !important;
+}
+
+.selectInput.formLengthBool {
+  width: 60px !important;
+}
+
+.textInput.formLengthLimit {
+  width: 50px !important;
+}
+
+.selectInput.formLengthLimit {
+  width: 85px !important;
+}
+
+.formLengthDate {
+  width: 75px !important;
+}
+
+.formLengthIPv4 {
+  width: 125px !important;
+}
+
+.formLengthIPv6 {
+  width: 100% !important;
+}
+
+.formLengthEmailUser, .formLengthEmailDomain {
+  width: 30% !important;
+}
+
+.formLengthHalf {
+  width: 15% !important;
+}
+
+.formLengthDouble {
+  width: 50% !important;
+}
+
+/* Individual Form Lengths */
+
+.textInput {
+  &#username, &#password, &#passwort, &#source_password {
+    width: 100px;
+  }
+}
+
+.selectInput {
+  &#language {
+    width: 75px;
+  }
+  &#client_group_id, &#default_group {
+    width: 125px;
+  }
+}
+
+input {
+  &#refresh, &#retry, &#expire, &#minimum, &#ttl {
+    width: 50px !important;
+  }
+}
