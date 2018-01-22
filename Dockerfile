@@ -95,7 +95,7 @@ RUN service postfix restart
 RUN ln -s /etc/mailman/apache.conf /etc/apache2/conf-enabled/mailman.conf
 
 # --- 14 Install PureFTPd And Quota
-RUN apt-get -y pure-ftpd-common pure-ftpd-mysql quota quotatool
+RUN apt-get -y install pure-ftpd-common pure-ftpd-mysql quota quotatool
 
 # install package building helpers
 # RUN apt-get -y --force-yes install dpkg-dev debhelper openbsd-inetd
