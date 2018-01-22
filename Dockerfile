@@ -73,6 +73,9 @@ RUN echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | deb
 RUN service mysql restart && apt-get -y install apache2 apache2-doc apache2-utils libapache2-mod-php php7.0 php7.0-common php7.0-gd php7.0-mysql php7.0-imap phpmyadmin php7.0-cli php7.0-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear php7.0-mcrypt mcrypt  imagemagick libruby libapache2-mod-python php7.0-curl php7.0-intl php7.0-pspell php7.0-recode php7.0-sqlite3 php7.0-tidy php7.0-xmlrpc php7.0-xsl memcached php-memcache php-imagick php-gettext php7.0-zip php7.0-mbstring memcached libapache2-mod-passenger php7.0-soap
 RUN a2enmod suexec rewrite ssl actions include dav_fs dav auth_digest cgi
 
+# --- 11 Install Let's Encrypt
+RUN apt-get -y install certbot
+
 # --- 12 XCache and PHP-FPM
 RUN apt-get -y install php5-xcache
 # php5 fpm (non-free)
