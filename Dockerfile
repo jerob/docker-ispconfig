@@ -76,8 +76,10 @@ RUN a2enmod suexec rewrite ssl actions include dav_fs dav auth_digest cgi
 # --- 11 Install Let's Encrypt
 RUN apt-get -y install certbot
 
-# --- 12 XCache and PHP-FPM
-RUN apt-get -y install php5-xcache
+# --- 12 Opcode and PHP-FPM
+RUN apt-get -y install php7.0-fpm php7.0-opcache php-apcu
+RUN a2enmod actions proxy_fcgi alias 
+RUN service apache2 restart
 # php5 fpm (non-free)
 # RUN apt-get -y install libapache2-mod-fastcgi php5-fpm
 # RUN a2enmod actions fastcgi alias
