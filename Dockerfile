@@ -143,13 +143,14 @@ ADD ./etc/fail2ban/filter.d/dovecot-pop3imap.conf /etc/fail2ban/filter.d/dovecot
 RUN echo "ignoreregex =" >> /etc/fail2ban/filter.d/postfix-sasl.conf
 RUN service fail2ban restart
 
-# --- 19 Install squirrelmail
-RUN apt-get -y install squirrelmail
-ADD ./etc/apache2/conf-enabled/squirrelmail.conf /etc/apache2/conf-enabled/squirrelmail.conf
-ADD ./etc/squirrelmail/config.php /etc/squirrelmail/config.php
-RUN mkdir /var/lib/squirrelmail/tmp
-RUN chown www-data /var/lib/squirrelmail/tmp
-RUN service mysql restart
+# --- 19 Install RoundCube
+# RUN apt-get -y install squirrelmail
+# ADD ./etc/apache2/conf-enabled/squirrelmail.conf /etc/apache2/conf-enabled/squirrelmail.conf
+# ADD ./etc/squirrelmail/config.php /etc/squirrelmail/config.php
+# RUN mkdir /var/lib/squirrelmail/tmp
+# RUN chown www-data /var/lib/squirrelmail/tmp
+RUN apt-get -y install roundcube roundcube-core roundcube-mysql roundcube-plugins
+# RUN service mysql restart
 
 # --- 20 Install ISPConfig 3
 RUN cd /tmp && cd . && wget http://www.ispconfig.org/downloads/ISPConfig-3-stable.tar.gz
