@@ -132,8 +132,8 @@ ADD etc/cron.d/awstats /etc/cron.d/
 
 # --- 17 Install Jailkit
 RUN apt-get -y install build-essential autoconf automake libtool flex bison debhelper binutils
-RUN cd /tmp && wget http://olivier.sessink.nl/jailkit/jailkit-2.17.tar.gz && tar xvfz jailkit-2.17.tar.gz && cd jailkit-2.17 && ./debian/rules binary
-RUN cd /tmp && dpkg -i jailkit_2.17-1_*.deb && rm -rf jailkit-2.17*
+RUN cd /tmp && wget http://olivier.sessink.nl/jailkit/jailkit-2.19.tar.gz && tar xvfz jailkit-2.19.tar.gz && cd jailkit-2.19 && echo 5 > debian/compat && ./debian/rules binary
+RUN cd /tmp && dpkg -i jailkit_2.19-1_*.deb && rm -rf jailkit-2.19*
 
 # --- 18 Install fail2ban
 RUN apt-get -y install fail2ban
