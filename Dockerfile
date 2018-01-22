@@ -18,7 +18,7 @@
 # https://www.howtoforge.com/tutorial/perfect-server-debian-8-jessie-apache-bind-dovecot-ispconfig-3/
 #
 
-FROM debian:jessie
+FROM debian:stretch
 
 MAINTAINER Jeremie Robert <appydo@gmail.com> version: 0.2
 
@@ -177,9 +177,9 @@ ADD ./bin/systemctl /bin/systemctl
 RUN sed -i "s/^hostname=server1.example.com$/hostname=$HOSTNAME/g" /tmp/ispconfig3_install/install/autoinstall.ini
 # RUN mysqladmin -u root password pass
 RUN service mysql restart && php -q /tmp/ispconfig3_install/install/install.php --autoinstall=/tmp/ispconfig3_install/install/autoinstall.ini
-ADD ./ISPConfig_Clean-3.0.5 /tmp/ISPConfig_Clean-3.0.5
-RUN cp -r /tmp/ISPConfig_Clean-3.0.5/interface /usr/local/ispconfig/
-RUN service mysql restart && mysql -ppass < /tmp/ISPConfig_Clean-3.0.5/sql/ispc-clean.sql
+# ADD ./ISPConfig_Clean-3.0.5 /tmp/ISPConfig_Clean-3.0.5
+# RUN cp -r /tmp/ISPConfig_Clean-3.0.5/interface /usr/local/ispconfig/
+# RUN service mysql restart && mysql -ppass < /tmp/ISPConfig_Clean-3.0.5/sql/ispc-clean.sql
 # Directory for dump SQL backup
 RUN mkdir -p /var/backup/sql
 RUN freshclam
