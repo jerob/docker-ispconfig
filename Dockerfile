@@ -1,16 +1,16 @@
 #
-#                    ##        .            
-#              ## ## ##       ==            
-#           ## ## ## ##      ===            
-#       /""""""""""""""""\___/ ===        
-#  ~~~ {~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~   
-#       \______ o          __/            
-#         \    \        __/             
-#          \____\______/                
-# 
+#                    ##        .
+#              ## ## ##       ==
+#           ## ## ## ##      ===
+#       /""""""""""""""""\___/ ===
+#  ~~~ {~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~
+#       \______ o          __/
+#         \    \        __/
+#          \____\______/
+#
 #          |          |
 #       __ |  __   __ | _  __   _
-#      /  \| /  \ /   |/  / _\ | 
+#      /  \| /  \ /   |/  / _\ |
 #      \__/| \__/ \__ |\_ \__  |
 #
 # Dockerfile for ISPConfig with MariaDB database
@@ -55,6 +55,8 @@ RUN echo 'mariadb-server mariadb-server/root_password password pass' | debconf-s
 RUN echo 'mariadb-server mariadb-server/root_password_again password pass' | debconf-set-selections
 RUN apt-get -y install postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd sudo
 ADD ./etc/postfix/master.cf /etc/postfix/master.cf
+RUN mv /etc/mysql/mariadb.conf.d/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf.backup
+ADD ./etc/mysql/mariadb.conf.d/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 RUN service postfix restart
 RUN service mysql restart
 
@@ -78,7 +80,7 @@ RUN apt-get -y install certbot
 
 # --- 12 Opcode and PHP-FPM
 RUN apt-get -y install php7.0-fpm php7.0-opcache php-apcu
-RUN a2enmod actions proxy_fcgi alias 
+RUN a2enmod actions proxy_fcgi alias
 RUN service apache2 restart
 # php5 fpm (non-free)
 # RUN apt-get -y install libapache2-mod-fastcgi php5-fpm
