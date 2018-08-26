@@ -176,6 +176,7 @@ RUN service fail2ban restart
 # RUN mkdir /var/lib/squirrelmail/tmp
 # RUN chown www-data /var/lib/squirrelmail/tmp
 RUN apt-get -y install roundcube roundcube-core roundcube-mysql roundcube-plugins
+ADD ./etc/apache2/conf-enabled/roundcube.conf /etc/apache2/conf-enabled/roundcube.conf
 # RUN service mysql restart
 
 # --- 20 Install ISPConfig 3
