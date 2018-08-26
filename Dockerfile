@@ -189,13 +189,15 @@ RUN cd /tmp && tar xfz ISPConfig-3-stable.tar.gz
 # RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 100M/g" /etc/php5/fpm/php.ini
 # RUN sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 100M/g" /etc/php5/fpm/php.ini
 
+# CLEANING
+RUN apt-get autoremove -y && apt-get clean && rm -rf /tmp/*
+
 # ADD ./etc/mysql/my.cnf /etc/mysql/my.cnf
-ADD ./etc/postfix/master.cf /etc/postfix/master.cf
 ADD ./etc/clamav/clamd.conf /etc/clamav/clamd.conf
 
 RUN echo "export TERM=xterm" >> /root/.bashrc
 
-EXPOSE 20 21 22 53/udp 53/tcp 80 443 953 8080 30000 30001 30002 30003 30004 30005 30006 30007 30008 30009 3306
+EXPOSE 20/tcp 21/tcp 22/tcp 53 80/tcp 443/tcp 953/tcp 8080/tcp 30000 30001 30002 30003 30004 30005 30006 30007 30008 30009 3306
 
 # ISPCONFIG Initialization and Startup Script
 ADD ./start.sh /start.sh
