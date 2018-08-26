@@ -82,6 +82,7 @@ expect eof
 echo "$SECURE_MYSQL"
 EOR
 RUN aptitude -y purge expect
+ADD ./etc/security/limits.conf /etc/security/limits.conf
 
 # --- 9 Install Amavisd-new, SpamAssassin And Clamav
 RUN apt-get -y install amavisd-new spamassassin clamav clamav-daemon zoo unzip bzip2 arj nomarch lzop cabextract apt-listchanges libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl
@@ -177,6 +178,7 @@ RUN service fail2ban restart
 # RUN chown www-data /var/lib/squirrelmail/tmp
 RUN apt-get -y install roundcube roundcube-core roundcube-mysql roundcube-plugins
 ADD ./etc/apache2/conf-enabled/roundcube.conf /etc/apache2/conf-enabled/roundcube.conf
+ADD ./etc/roundcube/config.inc.php /etc/roundcube/config.inc.php
 # RUN service mysql restart
 
 # --- 20 Install ISPConfig 3
