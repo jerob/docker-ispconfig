@@ -58,6 +58,7 @@ ADD ./etc/postfix/master.cf /etc/postfix/master.cf
 RUN mv /etc/mysql/mariadb.conf.d/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf.backup
 ADD ./etc/mysql/mariadb.conf.d/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 RUN service mysql start \
+&& echo "UPDATE mysql.user SET Password = PASSWORD('pass') WHERE User = 'root';" | mysql -u root \
 && echo "UPDATE mysql.user SET plugin='mysql_native_password' where user='root';" | mysql -u root \
 && echo "DELETE FROM mysql.user WHERE User='';" | mysql -u root \
 && echo "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');" | mysql -u root \
@@ -66,12 +67,12 @@ RUN service mysql start \
 && echo "FLUSH PRIVILEGES;" | mysql -u root
 RUN service postfix restart
 # RUN apt-get -y install expect
-
-# RUN mv /etc/mysql/debian.cnf /etc/mysql/debian.cnf.backup
-# ADD ./etc/mysql/debian.cnf /etc/mysql/debian.cnf
+RUN mv /etc/mysql/debian.cnf /etc/mysql/debian.cnf.backup
+ADD ./etc/mysql/debian.cnf /etc/mysql/debian.cnf
 ADD ./etc/security/limits.conf /etc/security/limits.conf
-# ADD ./etc/systemd/system/mysql.service.d/limits.conf /etc/systemd/system/mysql.service.d/limits.conf
-
+RUN mkdir -p /etc/systemd/system/mysql.service.d/
+ADD ./etc/systemd/system/mysql.service.d/limits.conf /etc/systemd/system/mysql.service.d/limits.conf
+# RUN systemctl daemon-reload
 
 # --- 9 Install Amavisd-new, SpamAssassin And Clamav
 RUN apt-get -y install amavisd-new spamassassin clamav clamav-daemon zoo unzip bzip2 arj nomarch lzop cabextract apt-listchanges libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl

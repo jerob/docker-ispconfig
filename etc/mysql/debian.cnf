@@ -1,0 +1,11 @@
+[client]
+host     = localhost
+user     = root
+password = pass
+socket   = /var/run/mysqld/mysqld.sock
+[mysql_upgrade]
+host     = localhost
+user     = root
+password = pass
+socket   = /var/run/mysqld/mysqld.sock
+basedir  = /usr
