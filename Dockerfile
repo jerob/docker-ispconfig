@@ -80,6 +80,15 @@ ADD ./etc/clamav/clamd.conf /etc/clamav/clamd.conf
 RUN service spamassassin stop
 RUN systemctl disable spamassassin
 
+# --- 9.1 Install Metronome XMPP Server
+RUN echo "deb http://packages.prosody.im/debian jessie main" > /etc/apt/sources.list.d/metronome.list
+RUN wget http://prosody.im/files/prosody-debian-packages.key -O - | apt-key add -
+RUN apt-get -qq update && apt-get -y -qq install git lua5.1 liblua5.1-0-dev lua-filesystem libidn11-dev libssl-dev lua-zlib lua-expat lua-event lua-bitop lua-socket lua-sec luarocks luarocks
+RUN luarocks install lpc
+RUN adduser --no-create-home --disabled-login --gecos 'Metronome' metronome
+RUN cd /opt && git clone https://github.com/maranda/metronome.git metronome
+RUN cd /opt/metronome && ./configure --ostype=debian --prefix=/usr && make && make install
+
 # --- 10 Install Apache2, PHP5, phpMyAdmin, FCGI, suExec, Pear, And mcrypt
 RUN echo 'phpmyadmin phpmyadmin/dbconfig-install boolean true' | debconf-set-selections
 # RUN echo 'phpmyadmin phpmyadmin/app-password-confirm password your-app-pwd' | debconf-set-selections
