@@ -189,9 +189,6 @@ RUN cd /tmp && tar xfz ISPConfig-3-stable.tar.gz
 # RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 100M/g" /etc/php5/fpm/php.ini
 # RUN sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 100M/g" /etc/php5/fpm/php.ini
 
-# CLEANING
-RUN apt-get autoremove -y && apt-get clean && rm -rf /tmp/*
-
 # ADD ./etc/mysql/my.cnf /etc/mysql/my.cnf
 ADD ./etc/clamav/clamd.conf /etc/clamav/clamd.conf
 
@@ -205,8 +202,7 @@ ADD ./supervisord.conf /etc/supervisor/supervisord.conf
 ADD ./etc/cron.daily/sql_backup.sh /etc/cron.daily/sql_backup.sh
 ADD ./autoinstall.ini /tmp/ispconfig3_install/install/autoinstall.ini
 RUN chmod 755 /start.sh
-RUN mkdir -p /var/run/sshd
-RUN mkdir -p /var/log/supervisor
+RUN mkdir -p /var/run/sshd /var/log/supervisor /var/run/supervisor
 RUN mv /bin/systemctl /bin/systemctloriginal
 ADD ./bin/systemctl /bin/systemctl
 
@@ -219,6 +215,9 @@ RUN service mysql start && php -q /tmp/ispconfig3_install/install/install.php --
 # Directory for dump SQL backup
 RUN mkdir -p /var/backup/sql
 RUN freshclam
+
+# CLEANING
+RUN apt-get autoremove -y && apt-get clean && rm -rf /tmp/*
 
 VOLUME ["/var/www/","/var/mail/","/var/backup/","/var/lib/mysql","/etc/","/usr/local/ispconfig","/var/log/"]
 
