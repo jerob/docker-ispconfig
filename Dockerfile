@@ -46,7 +46,7 @@ RUN echo "dash  dash/sh boolean no" | debconf-set-selections
 RUN dpkg-reconfigure dash
 
 # --- 7 Synchronize the System Clock
-RUN apt-get -y install ntp ntpdate
+# RUN apt-get -y install ntp ntpdate
 
 # --- 8 Install Postfix, Dovecot, MySQL, phpMyAdmin, rkhunter, binutils
 RUN echo 'mysql-server mysql-server/root_password password pass' | debconf-set-selections
