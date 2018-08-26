@@ -57,32 +57,21 @@ RUN apt-get -y install postfix postfix-mysql postfix-doc mariadb-client mariadb-
 ADD ./etc/postfix/master.cf /etc/postfix/master.cf
 RUN mv /etc/mysql/mariadb.conf.d/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf.backup
 ADD ./etc/mysql/mariadb.conf.d/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+RUN service mysql start \
+&& echo "UPDATE mysql.user SET plugin='mysql_native_password' where user='root';" | mysql -u root \
+&& echo "DELETE FROM mysql.user WHERE User='';" | mysql -u root \
+&& echo "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');" | mysql -u root \
+&& echo "DROP DATABASE IF EXISTS test;" | mysql -u root \
+&& echo "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';" | mysql -u root \
+&& echo "FLUSH PRIVILEGES;" | mysql -u root
 RUN service postfix restart
-RUN service mysql restart
-RUN aptitude -y install expect
-RUN <<EOR
-MYSQL_ROOT_PASSWORD=abcd1234
-SECURE_MYSQL=$(expect -c "
-set timeout 10
-spawn mysql_secure_installation
-expect \"Enter current password for root (enter for none):\"
-send \"$MYSQL\r\"
-expect \"Change the root password?\"
-send \"n\r\"
-expect \"Remove anonymous users?\"
-send \"y\r\"
-expect \"Disallow root login remotely?\"
-send \"y\r\"
-expect \"Remove test database and access to it?\"
-send \"y\r\"
-expect \"Reload privilege tables now?\"
-send \"y\r\"
-expect eof
-")
-echo "$SECURE_MYSQL"
-EOR
-RUN aptitude -y purge expect
+# RUN apt-get -y install expect
+
+# RUN mv /etc/mysql/debian.cnf /etc/mysql/debian.cnf.backup
+# ADD ./etc/mysql/debian.cnf /etc/mysql/debian.cnf
 ADD ./etc/security/limits.conf /etc/security/limits.conf
+# ADD ./etc/systemd/system/mysql.service.d/limits.conf /etc/systemd/system/mysql.service.d/limits.conf
+
 
 # --- 9 Install Amavisd-new, SpamAssassin And Clamav
 RUN apt-get -y install amavisd-new spamassassin clamav clamav-daemon zoo unzip bzip2 arj nomarch lzop cabextract apt-listchanges libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl
