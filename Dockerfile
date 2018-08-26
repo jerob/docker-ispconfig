@@ -166,7 +166,7 @@ RUN echo "ignoreregex =" >> /etc/fail2ban/filter.d/postfix-sasl.conf
 # ADD ./etc/squirrelmail/config.php /etc/squirrelmail/config.php
 # RUN mkdir /var/lib/squirrelmail/tmp
 # RUN chown www-data /var/lib/squirrelmail/tmp
-RUN apt-get -y install roundcube roundcube-core roundcube-mysql roundcube-plugins
+RUN service mysql start && apt-get -y install roundcube roundcube-core roundcube-mysql roundcube-plugins
 ADD ./etc/apache2/conf-enabled/roundcube.conf /etc/apache2/conf-enabled/roundcube.conf
 ADD ./etc/roundcube/config.inc.php /etc/roundcube/config.inc.php
 # RUN service mysql restart
