@@ -59,6 +59,29 @@ RUN mv /etc/mysql/mariadb.conf.d/50-server.cnf /etc/mysql/mariadb.conf.d/50-serv
 ADD ./etc/mysql/mariadb.conf.d/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 RUN service postfix restart
 RUN service mysql restart
+RUN aptitude -y install expect
+RUN <<EOR
+MYSQL_ROOT_PASSWORD=abcd1234
+SECURE_MYSQL=$(expect -c "
+set timeout 10
+spawn mysql_secure_installation
+expect \"Enter current password for root (enter for none):\"
+send \"$MYSQL\r\"
+expect \"Change the root password?\"
+send \"n\r\"
+expect \"Remove anonymous users?\"
+send \"y\r\"
+expect \"Disallow root login remotely?\"
+send \"y\r\"
+expect \"Remove test database and access to it?\"
+send \"y\r\"
+expect \"Reload privilege tables now?\"
+send \"y\r\"
+expect eof
+")
+echo "$SECURE_MYSQL"
+EOR
+RUN aptitude -y purge expect
 
 # --- 9 Install Amavisd-new, SpamAssassin And Clamav
 RUN apt-get -y install amavisd-new spamassassin clamav clamav-daemon zoo unzip bzip2 arj nomarch lzop cabextract apt-listchanges libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl
