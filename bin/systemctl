@@ -1,18 +1,19 @@
 #!/bin/bash
+SERVICE=${2/%.service/}
 case "$1" in
-	restart)
-		/etc/init.d/$2 restart
-	;;
-	stop)
-		/etc/init.d/$2 stop
-	;;
-	status)
-		/etc/init.d/$2 status
-	;;
-	start)
-		/etc/init.d/$2 start
-	;;
-	*)
-		command systemctloriginal "$@"
-	exit 1
+        restart)
+                /etc/init.d/$SERVICE restart
+        ;;
+        stop)
+                /etc/init.d/$SERVICE stop
+        ;;
+        status)
+                /etc/init.d/$SERVICE status
+        ;;
+        start)
+                /etc/init.d/$SERVICE start
+        ;;
+        *)
+                command systemctloriginal "$@"
+        exit 1
 esac
