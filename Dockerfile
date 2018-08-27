@@ -205,6 +205,7 @@ RUN chmod 755 /start.sh
 RUN mkdir -p /var/run/sshd /var/log/supervisor /var/run/supervisor
 RUN mv /bin/systemctl /bin/systemctloriginal
 ADD ./bin/systemctl /bin/systemctl
+RUN chmod 755 /bin/systemctl
 
 RUN sed -i "s/^hostname=server1.example.com$/hostname=$HOSTNAME/g" /tmp/ispconfig3_install/install/autoinstall.ini
 # RUN mysqladmin -u root password pass
