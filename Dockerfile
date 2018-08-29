@@ -57,14 +57,6 @@ RUN apt-get -y install postfix postfix-mysql postfix-doc mariadb-client mariadb-
 ADD ./etc/postfix/master.cf /etc/postfix/master.cf
 RUN mv /etc/mysql/mariadb.conf.d/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf.backup
 ADD ./etc/mysql/mariadb.conf.d/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-RUN service mysql start \
-&& echo "UPDATE mysql.user SET Password = PASSWORD('pass') WHERE User = 'root';" | mysql -u root \
-&& echo "UPDATE mysql.user SET plugin='mysql_native_password' where user='root';" | mysql -u root \
-&& echo "DELETE FROM mysql.user WHERE User='';" | mysql -u root \
-&& echo "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');" | mysql -u root \
-&& echo "DROP DATABASE IF EXISTS test;" | mysql -u root \
-&& echo "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';" | mysql -u root \
-&& echo "FLUSH PRIVILEGES;" | mysql -u root
 # RUN service postfix restart
 # RUN apt-get -y install expect
 RUN mv /etc/mysql/debian.cnf /etc/mysql/debian.cnf.backup
@@ -207,6 +199,15 @@ RUN mv /bin/systemctl /bin/systemctloriginal
 ADD ./bin/systemctl /bin/systemctl
 RUN chmod 755 /bin/systemctl
 
+RUN mysql_install_db
+RUN service mysql start \
+&& echo "UPDATE mysql.user SET Password = PASSWORD('pass') WHERE User = 'root';" | mysql -u root \
+&& echo "UPDATE mysql.user SET plugin='mysql_native_password' where user='root';" | mysql -u root \
+&& echo "DELETE FROM mysql.user WHERE User='';" | mysql -u root \
+&& echo "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');" | mysql -u root \
+&& echo "DROP DATABASE IF EXISTS test;" | mysql -u root \
+&& echo "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';" | mysql -u root \
+&& echo "FLUSH PRIVILEGES;" | mysql -u root
 RUN sed -i "s/^hostname=server1.example.com$/hostname=$HOSTNAME/g" /tmp/ispconfig3_install/install/autoinstall.ini
 # RUN mysqladmin -u root password pass
 RUN service mysql start && php -q /tmp/ispconfig3_install/install/install.php --autoinstall=/tmp/ispconfig3_install/install/autoinstall.ini
