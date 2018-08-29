@@ -125,8 +125,7 @@ RUN apt-get -y install pure-ftpd-common pure-ftpd-mysql quota quotatool
 # RUN useradd -g ftpgroup -d /dev/null -s /etc ftpuser
 # RUN apt-get -y install quota quotatool
 ADD ./etc/default/pure-ftpd-common /etc/default/pure-ftpd-common
-RUN echo 1 > /etc/pure-ftpd/conf/TLS
-RUN mkdir -p /etc/ssl/private/
+RUN echo 1 > /etc/pure-ftpd/conf/TLS && mkdir -p /etc/ssl/private/
 # RUN openssl req -x509 -nodes -days 7300 -newkey rsa:2048 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem
 # RUN chmod 600 /etc/ssl/private/pure-ftpd.pem
 
@@ -139,8 +138,14 @@ ADD etc/cron.d/awstats /etc/cron.d/
 
 # --- 17 Install Jailkit
 RUN apt-get -y install build-essential autoconf automake libtool flex bison debhelper binutils
-RUN cd /tmp && wget http://olivier.sessink.nl/jailkit/jailkit-2.19.tar.gz && tar xvfz jailkit-2.19.tar.gz && cd jailkit-2.19 && echo 5 > debian/compat && ./debian/rules binary
-RUN cd /tmp && dpkg -i jailkit_2.19-1_*.deb && rm -rf jailkit-2.19*
+RUN cd /tmp \
+&& wget http://olivier.sessink.nl/jailkit/jailkit-2.19.tar.gz \
+&& tar xvfz jailkit-2.19.tar.gz \
+&& cd jailkit-2.19 \
+&& echo 5 > debian/compat \
+&& ./debian/rules binary \
+&& cd /tmp \
+&& dpkg -i jailkit_2.19-1_*.deb
 
 # --- 18 Install fail2ban
 RUN apt-get -y install fail2ban
@@ -160,8 +165,7 @@ ADD ./etc/apache2/conf-enabled/roundcube.conf /etc/apache2/conf-enabled/roundcub
 ADD ./etc/roundcube/config.inc.php /etc/roundcube/config.inc.php
 
 # --- 20 Install ISPConfig 3
-RUN cd /root && wget http://www.ispconfig.org/downloads/ISPConfig-3-stable.tar.gz
-RUN cd /root && tar xfz ISPConfig-3-stable.tar.gz
+RUN cd /root && wget http://www.ispconfig.org/downloads/ISPConfig-3-stable.tar.gz && tar xfz ISPConfig-3-stable.tar.gz
 # RUN ["/bin/bash", "-c", "cat /tmp/install_ispconfig.txt | php -q /tmp/ispconfig3_install/install/install.php"]
 # RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 # RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 100M/g" /etc/php5/fpm/php.ini
