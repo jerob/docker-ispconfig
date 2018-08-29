@@ -96,11 +96,9 @@ RUN apt-get -y install certbot
 # --- 12 Opcode and PHP-FPM
 RUN apt-get -y install php7.0-fpm php7.0-opcache php-apcu
 RUN a2enmod actions proxy_fcgi alias
-RUN service apache2 restart
 # php5 fpm (non-free)
 # RUN apt-get -y install libapache2-mod-fastcgi php5-fpm
 # RUN a2enmod actions fastcgi alias
-# RUN service apache2 restart
 
 # --- 13 Install Mailman
 RUN echo 'mailman mailman/default_server_language en' | debconf-set-selections
