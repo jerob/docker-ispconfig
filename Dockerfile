@@ -194,6 +194,6 @@ RUN freshclam
 # CLEANING
 RUN apt-get autoremove -y && apt-get clean && rm -rf /tmp/*
 
-VOLUME ["/var/www/","/var/mail/","/var/backup/","/var/lib/mysql","/etc/","/usr/local/ispconfig","/var/log/"]
+VOLUME ["/var/www/","/var/mail/","/var/backup/","/var/lib/mysql","/var/log/"]
 
 CMD ["/bin/bash", "/start.sh"]
