@@ -27,9 +27,8 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # --- 1 Preliminary
 RUN apt-get -y update && apt-get -y upgrade && apt-get -y install rsyslog rsyslog-relp logrotate supervisor screenfetch
-RUN touch /var/log/cron.log
 # Create the log file to be able to run tail
-RUN touch /var/log/auth.log
+RUN touch /var/log/cron.log /var/log/auth.log
 
 # --- 2 Install the SSH server
 RUN apt-get -y install ssh openssh-server rsync
@@ -42,8 +41,7 @@ ADD ./etc/apt/sources.list /etc/apt/sources.list
 RUN apt-get -y update && apt-get -y upgrade
 
 # --- 6 Change The Default Shell
-RUN echo "dash  dash/sh boolean no" | debconf-set-selections
-RUN dpkg-reconfigure dash
+RUN echo "dash  dash/sh boolean no" | debconf-set-selections && dpkg-reconfigure dash
 
 # --- 7 Synchronize the System Clock
 # RUN apt-get -y install ntp ntpdate
@@ -67,8 +65,7 @@ ADD ./etc/systemd/system/mysql.service.d/limits.conf /etc/systemd/system/mysql.s
 # --- 9 Install Amavisd-new, SpamAssassin And Clamav
 RUN apt-get -y install amavisd-new spamassassin clamav clamav-daemon zoo unzip bzip2 arj nomarch lzop cabextract apt-listchanges libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl
 ADD ./etc/clamav/clamd.conf /etc/clamav/clamd.conf
-RUN service spamassassin stop
-RUN systemctl disable spamassassin
+RUN service spamassassin stop && systemctl disable spamassassin
 
 # --- 9.1 Install Metronome XMPP Server
 RUN echo "deb http://packages.prosody.im/debian jessie main" > /etc/apt/sources.list.d/metronome.list
@@ -102,7 +99,6 @@ RUN apt-get -y install mailman
 # RUN ["/usr/lib/mailman/bin/newlist", "-q", "mailman", "mail@mail.com", "pass"]
 ADD ./etc/aliases /etc/aliases
 RUN newaliases
-# RUN service postfix restart
 RUN ln -s /etc/mailman/apache.conf /etc/apache2/conf-enabled/mailman.conf
 
 # --- 14 Install PureFTPd And Quota
@@ -133,7 +129,6 @@ RUN echo 1 > /etc/pure-ftpd/conf/TLS
 RUN mkdir -p /etc/ssl/private/
 # RUN openssl req -x509 -nodes -days 7300 -newkey rsa:2048 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem
 # RUN chmod 600 /etc/ssl/private/pure-ftpd.pem
-# RUN service pure-ftpd-mysql restart
 
 # --- 15 Install BIND DNS Server
 RUN apt-get -y install bind9 dnsutils haveged
@@ -153,7 +148,6 @@ ADD ./etc/fail2ban/jail.local /etc/fail2ban/jail.local
 ADD ./etc/fail2ban/filter.d/pureftpd.conf /etc/fail2ban/filter.d/pureftpd.conf
 ADD ./etc/fail2ban/filter.d/dovecot-pop3imap.conf /etc/fail2ban/filter.d/dovecot-pop3imap.conf
 RUN echo "ignoreregex =" >> /etc/fail2ban/filter.d/postfix-sasl.conf
-# RUN service fail2ban restart
 
 # --- 19 Install RoundCube
 # RUN apt-get -y install squirrelmail
@@ -164,12 +158,10 @@ RUN echo "ignoreregex =" >> /etc/fail2ban/filter.d/postfix-sasl.conf
 RUN service mysql start && apt-get -y install roundcube roundcube-core roundcube-mysql roundcube-plugins
 ADD ./etc/apache2/conf-enabled/roundcube.conf /etc/apache2/conf-enabled/roundcube.conf
 ADD ./etc/roundcube/config.inc.php /etc/roundcube/config.inc.php
-# RUN service mysql restart
 
 # --- 20 Install ISPConfig 3
 RUN cd /tmp && cd . && wget http://www.ispconfig.org/downloads/ISPConfig-3-stable.tar.gz
 RUN cd /tmp && tar xfz ISPConfig-3-stable.tar.gz
-# RUN service mysql restart
 # RUN ["/bin/bash", "-c", "cat /tmp/install_ispconfig.txt | php -q /tmp/ispconfig3_install/install/install.php"]
 # RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 # RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 100M/g" /etc/php5/fpm/php.ini
@@ -187,11 +179,10 @@ ADD ./start.sh /start.sh
 ADD ./supervisord.conf /etc/supervisor/supervisord.conf
 ADD ./etc/cron.daily/sql_backup.sh /etc/cron.daily/sql_backup.sh
 ADD ./autoinstall.ini /tmp/ispconfig3_install/install/autoinstall.ini
-RUN chmod 755 /start.sh
 RUN mkdir -p /var/run/sshd /var/log/supervisor /var/run/supervisor
 RUN mv /bin/systemctl /bin/systemctloriginal
 ADD ./bin/systemctl /bin/systemctl
-RUN chmod 755 /bin/systemctl
+RUN chmod 755 /start.sh /bin/systemctl
 
 RUN mysql_install_db
 RUN service mysql start \
@@ -205,9 +196,6 @@ RUN service mysql start \
 RUN sed -i "s/^hostname=server1.example.com$/hostname=$HOSTNAME/g" /tmp/ispconfig3_install/install/autoinstall.ini
 # RUN mysqladmin -u root password pass
 RUN service mysql start && php -q /tmp/ispconfig3_install/install/install.php --autoinstall=/tmp/ispconfig3_install/install/autoinstall.ini
-# ADD ./ISPConfig_Clean-3.0.5 /tmp/ISPConfig_Clean-3.0.5
-# RUN cp -r /tmp/ISPConfig_Clean-3.0.5/interface /usr/local/ispconfig/
-# RUN service mysql restart && mysql -ppass < /tmp/ISPConfig_Clean-3.0.5/sql/ispc-clean.sql
 # Directory for dump SQL backup
 RUN mkdir -p /var/backup/sql
 RUN freshclam
