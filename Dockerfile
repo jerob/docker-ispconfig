@@ -18,7 +18,7 @@
 # https://www.howtoforge.com/tutorial/perfect-server-debian-8-jessie-apache-bind-dovecot-ispconfig-3/
 #
 
-FROM debian:stretch
+FROM debian:stretch-slim
 
 MAINTAINER Jeremie Robert <appydo@gmail.com> version: 0.2
 
