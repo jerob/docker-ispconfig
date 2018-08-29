@@ -49,22 +49,20 @@ RUN dpkg-reconfigure dash
 # RUN apt-get -y install ntp ntpdate
 
 # --- 8 Install Postfix, Dovecot, MySQL, phpMyAdmin, rkhunter, binutils
-RUN echo 'mysql-server mysql-server/root_password password pass' | debconf-set-selections
-RUN echo 'mysql-server mysql-server/root_password_again password pass' | debconf-set-selections
-RUN echo 'mariadb-server mariadb-server/root_password password pass' | debconf-set-selections
-RUN echo 'mariadb-server mariadb-server/root_password_again password pass' | debconf-set-selections
+RUN echo 'mysql-server mysql-server/root_password password pass' | debconf-set-selections \
+&& echo 'mysql-server mysql-server/root_password_again password pass' | debconf-set-selections \
+&& echo 'mariadb-server mariadb-server/root_password password pass' | debconf-set-selections \
+&& echo 'mariadb-server mariadb-server/root_password_again password pass' | debconf-set-selections
 RUN apt-get -y install postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd sudo
 ADD ./etc/postfix/master.cf /etc/postfix/master.cf
 RUN mv /etc/mysql/mariadb.conf.d/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf.backup
 ADD ./etc/mysql/mariadb.conf.d/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-# RUN service postfix restart
 # RUN apt-get -y install expect
 RUN mv /etc/mysql/debian.cnf /etc/mysql/debian.cnf.backup
 ADD ./etc/mysql/debian.cnf /etc/mysql/debian.cnf
 ADD ./etc/security/limits.conf /etc/security/limits.conf
 RUN mkdir -p /etc/systemd/system/mysql.service.d/
 ADD ./etc/systemd/system/mysql.service.d/limits.conf /etc/systemd/system/mysql.service.d/limits.conf
-# RUN systemctl daemon-reload
 
 # --- 9 Install Amavisd-new, SpamAssassin And Clamav
 RUN apt-get -y install amavisd-new spamassassin clamav clamav-daemon zoo unzip bzip2 arj nomarch lzop cabextract apt-listchanges libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl
@@ -82,11 +80,9 @@ RUN cd /opt && git clone https://github.com/maranda/metronome.git metronome
 RUN cd /opt/metronome && ./configure --ostype=debian --prefix=/usr && make && make install
 
 # --- 10 Install Apache2, PHP5, phpMyAdmin, FCGI, suExec, Pear, And mcrypt
-RUN echo 'phpmyadmin phpmyadmin/dbconfig-install boolean true' | debconf-set-selections
-# RUN echo 'phpmyadmin phpmyadmin/app-password-confirm password your-app-pwd' | debconf-set-selections
-RUN echo 'phpmyadmin phpmyadmin/mysql/admin-pass password pass' | debconf-set-selections
-# RUN echo 'phpmyadmin phpmyadmin/mysql/app-pass password your-app-db-pwd' | debconf-set-selections
-RUN echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | debconf-set-selections
+RUN echo 'phpmyadmin phpmyadmin/dbconfig-install boolean true' | debconf-set-selections \
+&& echo 'phpmyadmin phpmyadmin/mysql/admin-pass password pass' | debconf-set-selections \
+&& echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | debconf-set-selections
 RUN service mysql start && apt-get -y install apache2 apache2-doc apache2-utils libapache2-mod-php php7.0 php7.0-common php7.0-gd php7.0-mysql php7.0-imap phpmyadmin php7.0-cli php7.0-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear php7.0-mcrypt mcrypt  imagemagick libruby libapache2-mod-python php7.0-curl php7.0-intl php7.0-pspell php7.0-recode php7.0-sqlite3 php7.0-tidy php7.0-xmlrpc php7.0-xsl memcached php-memcache php-imagick php-gettext php7.0-zip php7.0-mbstring memcached libapache2-mod-passenger php7.0-soap
 RUN a2enmod suexec rewrite ssl actions include dav_fs dav auth_digest cgi
 
