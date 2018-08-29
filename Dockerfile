@@ -160,8 +160,8 @@ ADD ./etc/apache2/conf-enabled/roundcube.conf /etc/apache2/conf-enabled/roundcub
 ADD ./etc/roundcube/config.inc.php /etc/roundcube/config.inc.php
 
 # --- 20 Install ISPConfig 3
-RUN cd /tmp && cd . && wget http://www.ispconfig.org/downloads/ISPConfig-3-stable.tar.gz
-RUN cd /tmp && tar xfz ISPConfig-3-stable.tar.gz
+RUN cd /root && wget http://www.ispconfig.org/downloads/ISPConfig-3-stable.tar.gz
+RUN cd /root && tar xfz ISPConfig-3-stable.tar.gz
 # RUN ["/bin/bash", "-c", "cat /tmp/install_ispconfig.txt | php -q /tmp/ispconfig3_install/install/install.php"]
 # RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 # RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 100M/g" /etc/php5/fpm/php.ini
@@ -178,25 +178,12 @@ EXPOSE 20/tcp 21/tcp 22/tcp 53 80/tcp 443/tcp 953/tcp 8080/tcp 30000 30001 30002
 ADD ./start.sh /start.sh
 ADD ./supervisord.conf /etc/supervisor/supervisord.conf
 ADD ./etc/cron.daily/sql_backup.sh /etc/cron.daily/sql_backup.sh
-ADD ./autoinstall.ini /tmp/ispconfig3_install/install/autoinstall.ini
+ADD ./autoinstall.ini /root/ispconfig3_install/install/autoinstall.ini
 RUN mkdir -p /var/run/sshd /var/log/supervisor /var/run/supervisor
 RUN mv /bin/systemctl /bin/systemctloriginal
 ADD ./bin/systemctl /bin/systemctl
 RUN chmod 755 /start.sh /bin/systemctl
 
-RUN mysql_install_db
-RUN service mysql start \
-&& echo "UPDATE mysql.user SET Password = PASSWORD('pass') WHERE User = 'root';" | mysql -u root \
-&& echo "UPDATE mysql.user SET plugin='mysql_native_password' where user='root';" | mysql -u root \
-&& echo "DELETE FROM mysql.user WHERE User='';" | mysql -u root \
-&& echo "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');" | mysql -u root \
-&& echo "DROP DATABASE IF EXISTS test;" | mysql -u root \
-&& echo "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';" | mysql -u root \
-&& echo "FLUSH PRIVILEGES;" | mysql -u root
-RUN sed -i "s/^hostname=server1.example.com$/hostname=$HOSTNAME/g" /tmp/ispconfig3_install/install/autoinstall.ini
-# RUN mysqladmin -u root password pass
-RUN service mysql start && php -q /tmp/ispconfig3_install/install/install.php --autoinstall=/tmp/ispconfig3_install/install/autoinstall.ini
-# Directory for dump SQL backup
 RUN mkdir -p /var/backup/sql
 RUN freshclam
 
