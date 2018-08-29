@@ -102,7 +102,30 @@ RUN newaliases
 RUN ln -s /etc/mailman/apache.conf /etc/apache2/conf-enabled/mailman.conf
 
 # --- 14 Install PureFTPd And Quota
-RUN apt-get -y install pure-ftpd-common pure-ftpd-mysql quota quotatool
+# RUN apt-get -y install pure-ftpd-common pure-ftpd-mysql quota quotatool
+
+# --- 14 Install PureFTPd And Quota
+# install package building helpers
+RUN apt-get -qq -y --force-yes install dpkg-dev debhelper openbsd-inetd debian-keyring
+# install dependancies
+RUN apt-get -y -qq build-dep pure-ftpd
+# build from source
+RUN mkdir /tmp/pure-ftpd-mysql/ && \
+    cd /tmp/pure-ftpd-mysql/ && \
+    apt-get -qq source pure-ftpd-mysql && \
+    cd pure-ftpd-* && \
+    sed -i '/^optflags=/ s/$/ --without-capabilities/g' ./debian/rules && \
+    dpkg-buildpackage -b -uc > /tmp/pureftpd-build-stdout.txt 2> /tmp/pureftpd-build-stderr.txt
+# install the new deb files
+RUN dpkg -i /tmp/pure-ftpd-mysql/pure-ftpd-common*.deb && dpkg -i /tmp/pure-ftpd-mysql/pure-ftpd-mysql*.deb
+# Prevent pure-ftpd upgrading
+RUN apt-mark hold pure-ftpd-common pure-ftpd-mysql
+# setup ftpgroup and ftpuser
+RUN groupadd ftpgroup && useradd -g ftpgroup -d /dev/null -s /etc ftpuser
+RUN apt-get -qq update && apt-get -y -qq install quota quotatool
+#RUN /bin/bash -c 'sed -i "s/{{ SSLCERT_ORGANIZATION }}/${SSLCERT_ORGANIZATION}/g;s/{{ SSLCERT_UNITNAME }}/${SSLCERT_UNITNAME}/g;s/{{ SSLCERT_EMAIL }}/${SSLCERT_EMAIL}/g;s/{{ SSLCERT_LOCALITY }}/${SSLCERT_LOCALITY}/g;s/{{ SSLCERT_STATE }}/${SSLCERT_STATE}/g;s/{{ SSLCERT_COUNTRY }}/${SSLCERT_COUNTRY}/g;s/{{ SSLCERT_CN }}/${FQDN}/g" /root/config/openssl.cnf'
+#RUN openssl req -x509 -nodes -days 7300 -newkey rsa:4096 -config /root/config/openssl.cnf -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem
+#RUN chmod 600 /etc/ssl/private/pure-ftpd.pem
 
 # install package building helpers
 # RUN apt-get -y --force-yes install dpkg-dev debhelper openbsd-inetd
