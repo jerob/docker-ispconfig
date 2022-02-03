@@ -18,7 +18,7 @@
 # https://www.howtoforge.com/tutorial/perfect-server-debian-8-jessie-apache-bind-dovecot-ispconfig-3/
 #
 
-FROM debian:stretch-slim
+FROM debian:bullseye-slim
 
 MAINTAINER Jeremie Robert <appydo@gmail.com> version: 0.2
 
@@ -31,7 +31,7 @@ RUN apt-get -y update && apt-get -y upgrade && apt-get -y install rsyslog rsyslo
 RUN touch /var/log/cron.log /var/log/auth.log
 
 # --- 2 Install the SSH server
-RUN apt-get -y install ssh openssh-server rsync
+RUN apt-get -y install ssh openssh-server rsync wget
 
 # --- 3 Install a shell text editor
 RUN apt-get -y install nano vim-nox
@@ -51,7 +51,7 @@ RUN echo 'mysql-server mysql-server/root_password password pass' | debconf-set-s
 && echo 'mysql-server mysql-server/root_password_again password pass' | debconf-set-selections \
 && echo 'mariadb-server mariadb-server/root_password password pass' | debconf-set-selections \
 && echo 'mariadb-server mariadb-server/root_password_again password pass' | debconf-set-selections
-RUN apt-get -y install postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail4 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd sudo
+RUN apt-get -y install postfix postfix-mysql postfix-doc mariadb-client mariadb-server openssl getmail6 rkhunter binutils dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-sieve dovecot-lmtpd sudo curl
 ADD ./etc/postfix/master.cf /etc/postfix/master.cf
 RUN mv /etc/mysql/mariadb.conf.d/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf.backup
 ADD ./etc/mysql/mariadb.conf.d/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
@@ -63,12 +63,12 @@ RUN mkdir -p /etc/systemd/system/mysql.service.d/
 ADD ./etc/systemd/system/mysql.service.d/limits.conf /etc/systemd/system/mysql.service.d/limits.conf
 
 # --- 9 Install Amavisd-new, SpamAssassin And Clamav
-RUN apt-get -y install amavisd-new spamassassin clamav clamav-daemon zoo unzip bzip2 arj nomarch lzop cabextract apt-listchanges libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl
+RUN apt-get install amavisd-new spamassassin clamav clamav-daemon unzip bzip2 arj nomarch lzop cabextract p7zip p7zip-full unrar lrzip apt-listchanges libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl libdbd-mysql-perl postgrey -y
 ADD ./etc/clamav/clamd.conf /etc/clamav/clamd.conf
 RUN service spamassassin stop && systemctl disable spamassassin
 
 # --- 9.1 Install Metronome XMPP Server
-RUN echo "deb http://packages.prosody.im/debian jessie main" > /etc/apt/sources.list.d/metronome.list
+RUN echo "deb http://packages.prosody.im/debian bullseye main" > /etc/apt/sources.list.d/metronome.list
 RUN wget http://prosody.im/files/prosody-debian-packages.key -O - | apt-key add -
 RUN apt-get -qq update && apt-get -y -qq install git lua5.1 liblua5.1-0-dev lua-filesystem libidn11-dev libssl-dev lua-zlib lua-expat lua-event lua-bitop lua-socket lua-sec luarocks luarocks
 RUN luarocks install lpc
@@ -80,14 +80,14 @@ RUN cd /opt/metronome && ./configure --ostype=debian --prefix=/usr && make && ma
 RUN echo 'phpmyadmin phpmyadmin/dbconfig-install boolean true' | debconf-set-selections \
 && echo 'phpmyadmin phpmyadmin/mysql/admin-pass password pass' | debconf-set-selections \
 && echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | debconf-set-selections
-RUN service mysql start && apt-get -y install apache2 apache2-doc apache2-utils libapache2-mod-php php7.0 php7.0-common php7.0-gd php7.0-mysql php7.0-imap phpmyadmin php7.0-cli php7.0-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear php7.0-mcrypt mcrypt  imagemagick libruby libapache2-mod-python php7.0-curl php7.0-intl php7.0-pspell php7.0-recode php7.0-sqlite3 php7.0-tidy php7.0-xmlrpc php7.0-xsl memcached php-memcache php-imagick php-gettext php7.0-zip php7.0-mbstring memcached libapache2-mod-passenger php7.0-soap
+RUN service mariadb start && apt-get -y install apache2 apache2-utils libapache2-mod-php php7.4 php7.4-common php7.4-gd php7.4-mysql php7.4-imap php7.4-cli php7.4-cgi libapache2-mod-fcgid apache2-suexec-pristine php-pear mcrypt  imagemagick libruby libapache2-mod-python php7.4-curl php7.4-intl php7.4-pspell php7.4-sqlite3 php7.4-tidy php7.4-xmlrpc php7.4-xsl memcached php-memcache php-imagick php-php-gettext php7.4-zip php7.4-mbstring memcached libapache2-mod-passenger php7.4-soap php-apcu libapache2-reload-perl
 RUN a2enmod suexec rewrite ssl actions include dav_fs dav auth_digest cgi
 
 # --- 11 Install Let's Encrypt
 RUN apt-get -y install certbot
 
 # --- 12 Opcode and PHP-FPM
-RUN apt-get -y install php7.0-fpm php7.0-opcache php-apcu
+RUN apt-get -y install php7.4-fpm php7.4-opcache php-apcu python
 RUN a2enmod actions proxy_fcgi alias
 # php5 fpm (non-free)
 # RUN apt-get -y install libapache2-mod-fastcgi php5-fpm
@@ -95,7 +95,7 @@ RUN a2enmod actions proxy_fcgi alias
 
 # --- 13 Install Mailman
 RUN echo 'mailman mailman/default_server_language en' | debconf-set-selections
-RUN apt-get -y install mailman
+RUN apt-get -y install mailman3
 # RUN ["/usr/lib/mailman/bin/newlist", "-q", "mailman", "mail@mail.com", "pass"]
 ADD ./etc/aliases /etc/aliases
 RUN newaliases
@@ -156,7 +156,7 @@ RUN echo 1 > /etc/pure-ftpd/conf/TLS && mkdir -p /etc/ssl/private/
 RUN apt-get -y install bind9 dnsutils haveged
 
 # --- 16 Install Vlogger, Webalizer, And AWStats
-RUN apt-get -y install vlogger webalizer awstats geoip-database libclass-dbi-mysql-perl
+RUN apt-get -y install vlogger awffull awstats geoip-database libclass-dbi-mysql-perl
 ADD etc/cron.d/awstats /etc/cron.d/
 
 # --- 17 Install Jailkit
@@ -183,7 +183,7 @@ RUN echo "ignoreregex =" >> /etc/fail2ban/filter.d/postfix-sasl.conf
 # ADD ./etc/squirrelmail/config.php /etc/squirrelmail/config.php
 # RUN mkdir /var/lib/squirrelmail/tmp
 # RUN chown www-data /var/lib/squirrelmail/tmp
-RUN service mysql start && apt-get -y install roundcube roundcube-core roundcube-mysql roundcube-plugins
+RUN service mariadb start && apt-get -y install roundcube roundcube-core roundcube-mysql roundcube-plugins
 ADD ./etc/apache2/conf-enabled/roundcube.conf /etc/apache2/conf-enabled/roundcube.conf
 ADD ./etc/roundcube/config.inc.php /etc/roundcube/config.inc.php
 
@@ -211,6 +211,10 @@ RUN mv /bin/systemctl /bin/systemctloriginal
 ADD ./bin/systemctl /bin/systemctl
 RUN chmod 755 /start.sh /bin/systemctl
 
+#RUN mkdir /var/log/apache2
+#RUN mkdir /var/log/supervisor
+#RUN mkdir /var/log/clamav
+
 RUN mkdir -p /var/backup/sql
 RUN freshclam
 
@@ -219,4 +223,5 @@ RUN apt-get autoremove -y && apt-get clean && rm -rf /tmp/*
 
 VOLUME ["/var/www/","/var/mail/","/var/backup/","/var/lib/mysql","/var/log/"]
 
-CMD ["/bin/bash", "/start.sh"]
+#CMD ["/bin/bash", "/start.sh"]
+CMD ["/bin/bash"]
